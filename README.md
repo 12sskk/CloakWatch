@@ -38,6 +38,64 @@ Traditional website scanners typically inspect pages from a single browser persp
 
 ---
 
+# Setup & Execution (Phase 1 & Phase 2)
+
+This repository includes a controlled test environment (Phase 1) and a minimal multi-profile crawler (Phase 2).
+
+## Prerequisites
+- **Python 3.12** or another stable Python version is strongly recommended. (Note: Playwright's `greenlet` dependency currently lacks pre-built wheels for pre-release versions like Python 3.14, which will require C++ build tools if used).
+
+## Setup Instructions
+
+1. **Create and activate a virtual environment (Recommended)**:
+   ```bash
+   py -3.12 -m venv venv
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   .\venv\Scripts\pip.exe install -r requirements.txt
+   .\venv\Scripts\playwright.exe install chromium
+   ```
+
+## Phase 1: Test Server
+
+The test server simulates various cloaking and personalization scenarios.
+
+Start the test server (runs on port 5000 by default):
+
+```bash
+cd test_server
+..\venv\Scripts\python.exe app.py
+```
+
+Routes available:
+- `http://localhost:5000/cloaked` - Ground truth for cloaking (different content based on User-Agent)
+- `http://localhost:5000/responsive` - Legitimate responsive design (same content, different layout)
+- `http://localhost:5000/static` - Control route (always identical)
+
+Logs of all incoming requests are written to `test_server/test_server_log.jsonl`.
+
+## Phase 2: Crawler
+
+The crawler runs deterministic capture across multiple profiles to detect cloaking.
+
+Run the validation script to test the crawler against the local test server (ensure the test server is running in a separate terminal first):
+
+```bash
+cd crawler
+..\venv\Scripts\python.exe validate.py
+```
+
+The validation script will:
+1. Crawl all 3 test routes with all 4 profiles (defined in `profiles.json`).
+2. Produce a summary table indicating which pages show cloaking signals based on HTML SHA-256 differences.
+3. Re-run the entire crawl to verify determinism and ensure hashes match across identical runs.
+
+Artifacts (screenshots and HTML) and observations (`observations.jsonl`) are saved in the `validate_data_run1` and `validate_data_run2` directories when using `validate.py`. You can also run `crawler.py` directly to specify custom URLs.
+
+---
+
 # Vision
 
 Rather than building another website scanner, **CloakWatch** aims to become an **Internet-scale cyber threat intelligence platform** capable of:

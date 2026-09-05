@@ -1,0 +1,22 @@
+{
+  "P1_desktop_normal": {
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+    "viewport": {"width": 1920, "height": 1080},
+    "label": "P1_desktop_normal"
+  },
+  "P2_mobile_normal": {
+    "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Mobile Safari/537.36",
+    "viewport": {"width": 390, "height": 844},
+    "label": "P2_mobile_normal"
+  },
+  "P3_crawler_oriented": {
+    "user_agent": "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Googlebot/2.1; +http://www.google.com/bot.html) Safari/537.36",
+    "viewport": {"width": 1920, "height": 1080},
+    "label": "P3_crawler_oriented"
+  },
+  "P4_mobile_crawler": {
+    "user_agent": "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Googlebot/2.1; +http://www.google.com/bot.html) Safari/537.36",
+    "viewport": {"width": 390, "height": 844},
+    "label": "P4_mobile_crawler"
+  }
+}
