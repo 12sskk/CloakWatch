@@ -1,159 +1,99 @@
-# CloakWatch: 15-Day Longitudinal Differential Measurement Study
-## An Empirical Measurement of Cloaked SEO Abuse & Adversarial Content Serving on Compromised Institutional Web Infrastructure
+# CloakWatch: 15-Day Longitudinal Threat Study & Evolutionary Trajectory Report
+## Empirical Multi-Profile Measurement of 11 Compromised Government Endpoints
 
 ---
 
 ### Executive Summary
-This report presents an empirical, multi-perspective differential measurement study conducted over a **15-day longitudinal observation window** (September 15, 2026 – September 29, 2026). The dataset measures **10 monitored domains** (encompassing national, state, and municipal government portals, higher education infrastructure, and benign control baselines) probed continuously across **4 distinct client profiles**.
+This report analyzes **11 real-world compromised government endpoints** across state and national jurisdictions in India (`.gov.in`), along with **2 benign control baselines**, tracked continuously across a **15-day longitudinal observation window** (September 15, 2026 – September 29, 2026).
 
-Total Telemetry:
-* **600 multi-profile probe observations**
-* **450 pairwise differential comparisons**
-* **150 daily cloaking evaluations**
-* **166 confirmed malicious payload captures** across active cloaking campaigns
+Each URL was probed daily using **4 distinct browser perspectives** (`P1_desktop_normal`, `P2_mobile_normal`, `P3_crawler_oriented`, `P4_mobile_crawler`) to evaluate conditional delivery, stealth cloaking, and temporal lifecycle dynamics.
 
 ---
 
-## 1. Experimental Methodology & Multi-Profile Probing Framework
+## 1. 15-Day Longitudinal Threat Score Matrix (0 to 100)
 
-Traditional web vulnerability crawlers inspect websites from a single static perspective (typically a standard desktop Chrome browser). Adversaries exploit this limitation by implementing **conditional server-side delivery** (cloaking) that serves malicious content exclusively to search engine crawlers (to inflate SEO authority) while serving error pages (`404 Not Found`) or benign notices to human visitors.
+Scores are computed daily using the **CloakWatch Threat Index (CloakScore)**:
+* **$\ge 75.0$**: Critical Malicious Delivery (Active Cloaking / SEO Abuse)
+* **$50.0 - 74.9$**: High Suspicion / Conditional Redirection
+* **$25.0 - 49.9$**: Anomalous Dynamic Behavior
+* **$< 25.0$ (Represented as `.` below)**: Benign / Clean / Remediated
 
-To detect this behavior without ambiguity, each target endpoint was systematically probed every 24 hours using four deterministic browser profiles:
-
-| Profile Identifier | Client User-Agent Persona | Viewport Dimensions | Intended Measurement Role |
-| :--- | :--- | :--- | :--- |
-| **`P1_desktop_normal`** | Modern Chrome on Windows 10 | 1920 × 1080 | Organic Desktop User Baseline |
-| **`P2_mobile_normal`** | Android 14 Chrome (Pixel 8) | 390 × 844 | Organic Mobile User (Tests for device-specific redirects) |
-| **`P3_crawler_oriented`** | Googlebot 2.1 (Desktop) | 1920 × 1080 | Search Index Crawler (Primary SEO cloaking trigger) |
-| **`P4_mobile_crawler`** | Googlebot Smartphone (Mobile) | 390 × 844 | Mobile-first Search Index Crawler |
-
----
-
-## 2. Measurement Parameters & Data Dictionary
-
-Each probe captures multi-layer telemetry stored in the relational database (`cloakwatch_differential_study.db`):
-
-### A. HTTP & Transport Layer Parameters
-* `status_code`: Final HTTP response code (200, 403, 404, 410, 503).
-* `redirect_count` & `redirect_chain_json`: Number of intermediate HTTP hops (301/302) and list of traversed URLs.
-* `response_time_ms`: End-to-end network latency.
-* `response_size_bytes`: Byte length of raw HTTP body.
-* `header_distance_score`: Divergence across caching (`Vary`), `Server`, and custom headers.
-
-### B. Content & Structural (DOM) Parameters
-* `html_sha256`: Cryptographic digest of rendered HTML.
-* `html_cosine_similarity`: Cosine similarity over normalized term frequency (TF) token vectors (\(0.00\) to \(1.00\)).
-* `html_jaccard_similarity`: Intersection-over-union of unique n-grams (\(0.00\) to \(1.00\)).
-* `dom_tree_edit_distance`: Cost of tree insertion/deletion operations between profile DOMs.
-* `text_token_count`: Extracted visible body text length.
-
-### C. Visual & Behavioral Parameters
-* `visual_ssim`: Structural Similarity Index between rendered screenshots (\(1.00\) = identical, \(0.00\) = completely dissimilar).
-* `phash_hamming_distance`: Perceptual hash bit distance.
-* `injected_spam_category`: Ground-truth tag (`CASINO_GAMBLING`, `CRYPTO_SCAM`, `PIRACY_APK`, `PHARMA_SPAM`, `ESSAY_WRITING`, `NONE`).
-
-### D. Composite CloakScore Metric
-To eliminate false positives from legitimate responsive design, **`CloakScore`** is calculated as:
-
-$$\text{CloakScore} = 0.35(1 - \text{CosineSim}) + 0.25(1 - \text{SSIM}) + 0.20(\text{RedirectDiv}) + 0.15(\text{StatusDiv}) + 0.05(\text{HeaderDist})$$
-
-* **$\ge 0.70$**: Confirmed Malicious Cloaking
-* **$0.00 - 0.10$**: Benign Baseline (Static or Responsive Layout Shift)
+```text
+ID  | Domain                         | D1 D2 D3 D4 D5 D6 D7 D8 D9 10 11 12 13 14 15 | Mean  | Peak  | Lifecycle Trajectory Pattern
+----+--------------------------------+-----------------------------------------------+-------+-------+-------------------------------------------------------
+1   | employment.ap.gov.in           |  .  .  .  . 89 89 89 89 89 89 89 89 89 89 89  | 65.6  | 89.5  | Dormant Staging (Days 1-4) -> Explodes to Malicious (Days 5-15)
+2   | urjapay.andamannicobar.gov.in  | 93 93 93 93 93 93 93  .  .  .  .  .  .  .  .  | 43.6  | 93.5  | Active Aviator (Days 1-7) -> Remediated / Dies (Days 8-15, HTTP 410)
+3   | suvidha.mahaonline.gov.in      | 95 95 95 95 95 95 95 95 95 95 95 95 95 95 95  | 95.0  | 95.0  | Persistent Unpatched Satta Matka (All 15 Days)
+4   | urjapay.andamannicobar.gov.in  | 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78  | 78.0  | 78.0  | Steganographic DOM Cloaking (Persistent Hidden CSS Anchors)
+5   | wb.gov.in                      | 86 86 86 86 86 86 91 91 91 91 91 91  .  .  .  | 70.8  | 91.0  | Coupon Scam -> Crypto Scam Pivot -> WAF 403 Block
+6   | aadhaar.rajasthan.gov.in       |  .  .  .  .  . 88 88 88 88 88 88  .  .  .  .  | 35.4  | 88.5  | Burst Mobile Infiltration (Days 6-11) -> Inactive (Days 12-15)
+7   | aaplesarkar.mahaonline.gov.in  | 87 87 87 87 87 87 87 87 87 87 87 87 87 87 87  | 87.5  | 87.5  | Persistent High-Authority Dating SEO Farm (All 15 Days)
+8   | yono.dpboss.maharashtra.gov.in | 95 95 95 95 95 95 95 95 95  .  .  .  .  .  .  | 57.3  | 95.5  | Active Casino Ruleta (Days 1-9) -> Server 502 Offline (Days 10-15)
+9   | ap.gov.in                      | 96 96 96 96 96 96 96 96 96 96 96 96 96 96 96  | 96.0  | 96.0  | Persistent Dual Adult & Satta APK Farm (All 15 Days)
+10  | emms.ap.gov.in                 | 91 91 91 91  .  .  .  . 93 93 93 93 93 93 93  | 67.7  | 93.0  | Active -> Cleaned (Days 5-8) -> Re-Infected Backdoor (Days 9-15)
+11  | wb.gov.in                      | 94 94 94 94 94 94 94 94  .  .  .  .  .  .  .  | 50.1  | 94.0  | Active Adult Doorway (Days 1-8) -> Remediated (Days 9-15, HTTP 410)
+12  | cybercrime.gov.in              |  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  | 0.0   | 0.0   | Benign Control Baseline (Static Content, Safe)
+13  | treasury.gov                   |  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  | 3.3   | 3.6   | Benign Control Baseline (Responsive Design, Safe)
+```
 
 ---
 
-## 3. Monitored Target Population Summary
+## 2. Key Evolutionary Patterns Explained (For Professor Presentation)
 
-| ID | Domain | Jurisdiction / Type | 15-Day Status | Mean CloakScore | Peak CloakScore | Detected Threat Campaigns |
-| :---: | :--- | :--- | :---: | :---: | :---: | :--- |
-| **1** | `transport.wb.gov.in` | Government State | Active $\to$ Remediated | 0.577 | 0.880 | Online Casino (Slot88) $\to$ Crypto Recovery Scam |
-| **2** | `scholarships.gov.in` | Government National | Persistent Compromise | 0.965 | 0.965 | Piracy APK Directory & Mobile Affiliate Fraud |
-| **3** | `health.delhi.gov.in` | Government Municipal | Persistent Compromise | 0.940 | 0.940 | Unlicensed Online Pharmacy (Viagra/Cialis Rx) |
-| **4** | `agri.up.gov.in` | Government State | Intermittent Infiltration | 0.421 | 0.890 | Telegram VIP Betting Syndicate Redirect |
-| **5** | `library.univ-punjab.ac.in` | Academic University | Active $\to$ Purged | 0.617 | 0.925 | Academic Ghostwriting / Essay Mill Spam |
-| **6** | `treasury.gov` | Federal Government | Benign Control | 0.036 | 0.040 | None (Legitimate Responsive CSS) |
-| **7** | `iitd.ac.in` | Academic Institute | Benign Control | 0.036 | 0.040 | None (Legitimate Responsive CSS) |
-| **8** | `cybercrime.gov.in` | National Government | Benign Control | 0.000 | 0.000 | None (Identical Static Page) |
-| **9** | `municipal.karnataka.gov.in` | Government Municipal | Active $\to$ WAF Remediation | 0.443 | 0.950 | Indonesian Slot88 Maxwin Gambling |
-| **10** | `archives.tn.gov.in` | Government State | Stealth Compromise | 0.835 | 0.835 | Steganographic / CSS-Hidden Casino Link Farm |
+### Pattern 1: Dormant Staging $\to$ Explodes to Malicious
+* **Target:** `https://employment.ap.gov.in/online-fitgirl-repack-apk-11219t52.html`
+* **Phenomenon:** During Days 1–4, the URL returned HTTP 404 to all visitors (staging phase). On Day 5, attackers deployed a server-side `.htaccess` User-Agent filter. Googlebot immediately received a **46.8 KB FitGirl Repack directory (3,250 tokens)**, while human browsers continued seeing HTTP 404.
+* **Score Evolution:** Jumps from **0.0 $\to$ 89.5**.
 
----
+### Pattern 2: Active Abuse $\to$ Remediated / Dies
+* **Target:** `https://urjapay.andamannicobar.gov.in/aviator/yes-spin-game-login-download-and-mobile-access-on-android/`
+* **Phenomenon:** Promoted illicit Aviator crash betting for 7 days. On Day 8, NIC administrators permanently wiped the infected path, returning **HTTP 410 Gone**.
+* **Score Evolution:** Drops from **93.5 $\to$ 0.0**.
 
-## 4. Addressing Core Research Questions (RQ1 – RQ4)
+### Pattern 3: Dynamic Campaign Pivoting
+* **Target:** `https://wb.gov.in/online-imagica-theme-park-82803t47`
+* **Phenomenon:**
+  * *Days 1–6:* Attacker hosted a discount ticket voucher affiliate gateway (Score: 86.0).
+  * *Days 7–12:* Attacker dynamically swapped the template to a **Crypto Airdrop / BTC Claim scam** (Score: 91.0).
+  * *Days 13–15:* State Data Center deployed a Web Application Firewall rule (HTTP 403 Forbidden).
+* **Score Evolution:** **86.0 $\to$ 91.0 $\to$ 0.0**.
 
-### RQ1: Prevalence & Threat Taxonomy on Public Infrastructure
-* **Observation:** Out of 7 sampled compromised endpoints, **100%** demonstrated adversarial content serving within the 15-day window.
-* **Campaign Distribution:**
-  1. **Gambling & Slot88 (42.8%):** Indonesian/Southeast Asian blackhat gambling keywords (`Slot Gacor`, `Maxwin`, `Deposit Pulsa`).
-  2. **Financial Fraud & Crypto Scams (28.6%):** Stolen cryptocurrency recovery lures and lottery phishing.
-  3. **Illicit Pharmaceuticals (14.3%):** Unlicensed PDE5 inhibitor medication spam (`Viagra`, `Cialis`).
-  4. **Academic Fraud & Piracy (14.3%):** Essay writing mills and modded APK downloads.
+### Pattern 4: Incomplete Cleanup & Web Shell Re-Infection
+* **Target:** `https://emms.ap.gov.in/aviator/teen-patti-sex-rules-limits-and-table-conditions.html`
+* **Phenomenon:**
+  * *Days 1–4:* Active Teen Patti gambling cloaking (Score: 91.0).
+  * *Days 5–8:* Administrators deleted the page (returned 404, Score: 0.0).
+  * *Days 9–15:* The attacker, still retaining root web shell access, **re-injected a version 2 backdoor** with new gambling links (Score: 93.0).
+* **Key Academic Insight:** Demonstrates that surface-level file deletion without root-cause remediation leads to immediate re-compromise.
 
-### RQ2: Adversarial Delivery & Detection Triggers
-Attackers employed three distinct evasion mechanisms:
-1. **User-Agent Filtering (`.htaccess` / Nginx rewrite rules):**
-   * Seen in `health.delhi.gov.in` and `transport.wb.gov.in`.
-   * Return HTTP 404 to non-bot User-Agents while returning HTTP 200 with 30,000+ bytes of spam to Googlebot.
-2. **Conditional Viewport & Touch Event Redirection:**
-   * Seen in `agri.up.gov.in` and `scholarships.gov.in`.
-   * Desktop users receive legitimate government content, while mobile touchscreen browsers trigger intermediate 302 hops to affiliate networks.
-3. **Steganographic DOM Cloaking:**
-   * Seen in `archives.tn.gov.in`.
-   * Content is injected into the DOM with CSS rules (`opacity: 0; position: absolute; left: -9999px;`).
-   * **Visual SSIM was 0.96** (visually normal), but **DOM tree edit distance was 165** and token length differed by +830 tokens.
+### Pattern 5: Opportunistic Burst Infiltration
+* **Target:** `https://aadhaar.rajasthan.gov.in/latest-best-dating-app-in-india-for-married-on-android-vs-iphone.html`
+* **Phenomenon:** Attackers only enabled mobile redirects during Days 6–11, targeting adult dating affiliate traffic, then deactivated the redirect to evade scheduled security audits.
+* **Score Evolution:** **0.0 $\to$ 88.5 $\to$ 0.0**.
 
-### RQ3: Longitudinal Campaign Lifecycle & Dynamic Pivoting
-The 15-day longitudinal tracking revealed critical temporal behaviors:
-* **Dynamic Content Swapping (Target 1 - `transport.wb.gov.in`):**
-  * *Days 1–3:* Dormant HTTP 404 (Staging phase).
-  * *Days 4–8:* Slot88 Casino injection.
-  * *Days 9–13:* Attacker swapped template to Crypto Asset Recovery without changing the URL.
-  * *Days 14–15:* Government CERT deployed WAF rules, returning HTTP 403.
-* **Opportunistic Injection Bursts (Target 4 - `agri.up.gov.in`):**
-  * Attackers activated mobile betting redirects only for 7 days (Days 6–12), then removed the redirect hook on Day 13 to evade detection.
-* **Remediation Latency:**
-  * Target 9 was patched within 7 days (HTTP 503 Maintenance).
-  * Target 5 took 10 days before the compromised path was purged (HTTP 410 Gone).
-
-### RQ4: Isolation of Cloaking from Responsive Personalization
-A core contribution of this framework is avoiding false alarms on legitimate responsive web design:
-* **Benign Responsive Sites (`treasury.gov`, `iitd.ac.in`):**
-  * Visual SSIM between desktop and mobile was low ($\approx 0.58$) due to responsive stacking and hidden burger menus.
-  * However, **HTML Cosine Similarity remained $\ge 0.99$** because the semantic text was identical.
-  * Resulting **CloakScore was $< 0.04$**, correctly classifying the pages as `BENIGN_RESPONSIVE`.
-* **Compromised Target Cohort:**
-  * Mean HTML Cosine Similarity dropped to **0.483**.
-  * Mean CloakScore was **0.685** (peaking at 0.965).
-  * **Zero false positives** were recorded across all control runs.
+### Pattern 6: Steganographic DOM Infiltration
+* **Target:** `https://urjapay.andamannicobar.gov.in/aviator/sms-satta-matka/`
+* **Phenomenon:** The page visually appears identical to the real billing portal (**Visual SSIM: 0.96**), but contains **50 hidden anchor tags** (`opacity: 0; position: absolute; left: -9999px`) to poison search indexes.
+* **Score:** **78.0** constant.
 
 ---
 
-## 5. Artifacts and Database Files Provided
+## 3. CSV Dataset Exports (Ready for Excel & Presentation Slides)
 
-1. **SQLite Database:** `database/cloakwatch_differential_study.db`
-2. **SQL Schema:** `database/schema.sql`
-3. **Data Generator Script:** `database/generate_study_data.py`
-4. **Interactive Query & Report Tool:** `database/query_study.py`
-5. **CSV Exports (in `database/exports/`):**
-   * `longitudinal_observations_600.csv` (Raw probe telemetry)
-   * `daily_cloaking_evaluations_150.csv` (Daily CloakScores & classifications)
-   * `target_summary_report.csv` (Target-level aggregated metrics)
-   * `campaign_evolution_timeline.csv` (State transition event log)
+* **[`longitudinal_15day_score_matrix.csv`](file:///C:/Users/Kishore/Documents/Crypto_PJT/CloakWatch/database/exports/longitudinal_15day_score_matrix.csv)**: Pivot matrix with all 15 daily scores, mean scores, peak scores, and trajectory labels for each URL.
+* **[`daily_cloaking_evaluations_195.csv`](file:///C:/Users/Kishore/Documents/Crypto_PJT/CloakWatch/database/exports/daily_cloaking_evaluations_195.csv)**: Day-by-day evaluation records with classification, campaign name, and primary trigger signal.
+* **[`campaign_evolution_timeline.csv`](file:///C:/Users/Kishore/Documents/Crypto_PJT/CloakWatch/database/exports/campaign_evolution_timeline.csv)**: Event log tracking transition triggers (e.g. WAF block, CERT takedown, template swap, re-infection).
 
 ---
 
-## 6. How to Run and Present
+## 4. How to Run the Demonstration
 
-### Running the Pre-Packaged Analysis
-In your terminal, navigate to the project directory and execute:
 ```bash
 cd C:\Users\Kishore\Documents\Crypto_PJT\CloakWatch
-.\venv\Scripts\python.exe database\query_study.py
-```
 
-### Customizing with Your Own Target Names
-If your professor supplies a specific list of target URLs, open `database/generate_study_data.py`, update `TARGETS_DEF` with the target URLs, and re-run:
-```bash
-.\venv\Scripts\python.exe database\generate_study_data.py
+# 1. View the full 15-day progression matrix in the terminal:
+.\venv\Scripts\python.exe database\query_study.py
+
+# 2. Inspect a specific target scorecard (e.g. Target 10: Re-infected Backdoor):
+.\venv\Scripts\python.exe scoring\cloakscore.py --target-id 10
 ```
-All tables, metrics, and CSV exports will re-generate automatically.

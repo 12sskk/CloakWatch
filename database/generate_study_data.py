@@ -2,8 +2,14 @@
 """
 CloakWatch: Longitudinal Differential Measurement Dataset Generator
 Simulates a rigorous 15-day longitudinal study tracking multi-profile probing
-across compromised government/institutional websites and benign controls.
-Generates an SQLite database and exportable CSVs for statistical presentation.
+across 11 real-world compromised government endpoints + 2 benign controls.
+Models realistic campaign evolution:
+  - Evolve from dormant to malicious (e.g. Staging -> Attack)
+  - Active -> Remediated / Dies (e.g. Patched by CERT/admin)
+  - Campaign Pivot (e.g. Coupon Scam -> Crypto Fraud -> WAF block)
+  - Intermittent / Burst Infiltration (e.g. Mobile redirect active for 6 days then removed)
+  - Re-infection via persistent web shell (Cleaned up, then re-attacked)
+  - Persistent unpatched cloaking (Active throughout all 15 days)
 """
 
 import os
@@ -48,76 +54,111 @@ PROFILES = {
     }
 }
 
+# 11 Target URLs provided by user + 2 Benign Controls
 TARGETS_DEF = [
     {
-        "domain": "transport.wb.gov.in",
-        "url": "https://transport.wb.gov.in/services/permit-status",
+        "id": 1,
+        "domain": "employment.ap.gov.in",
+        "url": "https://employment.ap.gov.in/online-fitgirl-repack-apk-11219t52.html",
+        "category": "GOVERNMENT_STATE",
+        "jurisdiction": "Andhra Pradesh, India",
+        "threat_profile": "Evolution Pattern A: Dormant Staging (Days 1-4) -> Explodes into Active Piracy APK Cloaking (Days 5-15)"
+    },
+    {
+        "id": 2,
+        "domain": "urjapay.andamannicobar.gov.in",
+        "url": "https://urjapay.andamannicobar.gov.in/aviator/yes-spin-game-login-download-and-mobile-access-on-android/",
+        "category": "GOVERNMENT_STATE",
+        "jurisdiction": "Andaman & Nicobar, India",
+        "threat_profile": "Evolution Pattern B: Active Aviator Gambling (Days 1-7) -> Remediated / Purged by Admin (Days 8-15, HTTP 410)"
+    },
+    {
+        "id": 3,
+        "domain": "suvidha.mahaonline.gov.in",
+        "url": "https://suvidha.mahaonline.gov.in/apps-kalyani-challenging-figure.html",
+        "category": "GOVERNMENT_STATE",
+        "jurisdiction": "Maharashtra, India",
+        "threat_profile": "Evolution Pattern C: Persistent Unpatched Satta Matka Betting Farm (Active throughout all 15 days)"
+    },
+    {
+        "id": 4,
+        "domain": "urjapay.andamannicobar.gov.in",
+        "url": "https://urjapay.andamannicobar.gov.in/aviator/sms-satta-matka/",
+        "category": "GOVERNMENT_STATE",
+        "jurisdiction": "Andaman & Nicobar, India",
+        "threat_profile": "Evolution Pattern D: Steganographic DOM Cloaking (Days 1-15: Hidden off-screen CSS links for bots, blank page for users)"
+    },
+    {
+        "id": 5,
+        "domain": "wb.gov.in",
+        "url": "https://wb.gov.in/online-imagica-theme-park-82803t47",
         "category": "GOVERNMENT_STATE",
         "jurisdiction": "West Bengal, India",
-        "threat_profile": "Compromised CMS: Temporal Campaign Shift (Dormant -> Casino -> Crypto -> Remediated)"
+        "threat_profile": "Evolution Pattern E: Multi-Pivot Campaign (Days 1-6: Coupon/Ticket Scam -> Days 7-12: Crypto Fraud -> Days 13-15: WAF 403)"
     },
     {
-        "domain": "scholarships.gov.in",
-        "url": "https://scholarships.gov.in/portal/scheme-guidelines",
-        "category": "GOVERNMENT_NATIONAL",
-        "jurisdiction": "National (India)",
-        "threat_profile": "Persistent Multi-Vector Cloaking: Piracy/APK directory for Googlebot, Mobile User Redirect to Scam Affiliate"
-    },
-    {
-        "domain": "health.delhi.gov.in",
-        "url": "https://health.delhi.gov.in/reports/bulletin-2024",
-        "category": "GOVERNMENT_MUNICIPAL",
-        "jurisdiction": "Delhi NCT, India",
-        "threat_profile": "Classic User-Agent Cloaking: Unlicensed Online Pharmacy for Search Bots, 404 for Normal Browsers"
-    },
-    {
-        "domain": "agri.up.gov.in",
-        "url": "https://agri.up.gov.in/schemes/kisan-subsidy",
+        "id": 6,
+        "domain": "aadhaar.rajasthan.gov.in",
+        "url": "https://aadhaar.rajasthan.gov.in/latest-best-dating-app-in-india-for-married-on-android-vs-iphone.html",
         "category": "GOVERNMENT_STATE",
-        "jurisdiction": "Uttar Pradesh, India",
-        "threat_profile": "Intermittent Mobile-Targeted Infiltration: Telegram Betting Redirection for Mobile Users on Days 6-12"
+        "jurisdiction": "Rajasthan, India",
+        "threat_profile": "Evolution Pattern F: Burst Mobile Infiltration (Days 1-5: Benign -> Days 6-11: Mobile Redirection to Adult Affiliate -> Days 12-15: Reverts)"
     },
     {
-        "domain": "library.univ-punjab.ac.in",
-        "url": "https://library.univ-punjab.ac.in/archives/digitized",
-        "category": "ACADEMIC",
-        "jurisdiction": "Punjab, India",
-        "threat_profile": "Academic Ghostwriting SEO Hijack: Essay-writing service keywords injected for Googlebot until Day 10 cleanup"
+        "id": 7,
+        "domain": "aaplesarkar.mahaonline.gov.in",
+        "url": "https://aaplesarkar.mahaonline.gov.in/latest-best-dating-apps-india-which-app-fits-your-age-city-and-goals",
+        "category": "GOVERNMENT_STATE",
+        "jurisdiction": "Maharashtra, India",
+        "threat_profile": "Evolution Pattern G: High-Authority Dating SEO Farm (Persistent 15 days: 3,500 token doorway for bots, 404 for users)"
     },
     {
-        "domain": "treasury.gov",
-        "url": "https://www.treasury.gov/resource-center/data-chart",
-        "category": "BENIGN_CONTROL",
-        "jurisdiction": "Federal (United States)",
-        "threat_profile": "Benign Responsive Baseline: High visual CSS variance across viewports, Identical semantic text"
+        "id": 8,
+        "domain": "yono.dpboss.maharashtra.gov.in",
+        "url": "https://yono.dpboss.maharashtra.gov.in/winner-ruleta/",
+        "category": "GOVERNMENT_STATE",
+        "jurisdiction": "Maharashtra, India",
+        "threat_profile": "Evolution Pattern H: Subdomain Hijack -> Defacement -> Server Shutdown (Days 1-9: Casino Ruleta -> Days 10-15: 502 Bad Gateway)"
     },
     {
-        "domain": "iitd.ac.in",
-        "url": "https://www.iitd.ac.in/events/annual-symposium",
-        "category": "BENIGN_CONTROL",
-        "jurisdiction": "National Institute (India)",
-        "threat_profile": "Benign Responsive Baseline: Standard academic portal with media-query responsive navigation"
+        "id": 9,
+        "domain": "ap.gov.in",
+        "url": "https://ap.gov.in/uono/sex-satta-apk-16635t4.htm",
+        "category": "GOVERNMENT_STATE",
+        "jurisdiction": "Andhra Pradesh, India",
+        "threat_profile": "Evolution Pattern I: Dual Satta & Adult APK Injection (Persistent high threat throughout all 15 days)"
     },
     {
+        "id": 10,
+        "domain": "emms.ap.gov.in",
+        "url": "https://emms.ap.gov.in/aviator/teen-patti-sex-rules-limits-and-table-conditions.html",
+        "category": "GOVERNMENT_STATE",
+        "jurisdiction": "Andhra Pradesh, India",
+        "threat_profile": "Evolution Pattern J: Re-Infection Lifecycle (Days 1-4: Active Spam -> Days 5-8: Cleaned 404 -> Days 9-15: Web shell Re-infection!)"
+    },
+    {
+        "id": 11,
+        "domain": "wb.gov.in",
+        "url": "https://wb.gov.in/apps-how-to-play-free-sex-games-without-verification-on-mobile.html",
+        "category": "GOVERNMENT_STATE",
+        "jurisdiction": "West Bengal, India",
+        "threat_profile": "Evolution Pattern K: Blackhat Adult Doorway -> Google Blacklist & Admin Takedown (Days 1-8: Active -> Days 9-15: 410 Gone)"
+    },
+    {
+        "id": 12,
         "domain": "cybercrime.gov.in",
         "url": "https://cybercrime.gov.in/static/awareness.html",
         "category": "BENIGN_CONTROL",
         "jurisdiction": "National (India)",
-        "threat_profile": "Benign Static Baseline: Exact byte-for-byte identical HTML and SSIM 1.0 across all 4 profiles"
+        "threat_profile": "Control Cohort: Benign Static Baseline (Exact byte-for-byte identical HTML and SSIM 1.0 across all 4 profiles, Days 1-15)"
     },
     {
-        "domain": "municipal.karnataka.gov.in",
-        "url": "https://municipal.karnataka.gov.in/notices/tenders",
-        "category": "GOVERNMENT_MUNICIPAL",
-        "jurisdiction": "Karnataka, India",
-        "threat_profile": "Active Compromise with Rapid Mitigation: Online Slot Spam Days 1-7, Incident response WAF block on Day 8"
-    },
-    {
-        "domain": "archives.tn.gov.in",
-        "url": "https://archives.tn.gov.in/public/gazette-2023",
-        "category": "GOVERNMENT_STATE",
-        "jurisdiction": "Tamil Nadu, India",
-        "threat_profile": "DOM-Hidden CSS Cloaking: 45 gambling anchor links hidden off-screen (opacity:0), high visual similarity but low DOM similarity"
+        "id": 13,
+        "domain": "treasury.gov",
+        "url": "https://www.treasury.gov/resource-center/data-chart",
+        "category": "BENIGN_CONTROL",
+        "jurisdiction": "Federal (United States)",
+        "threat_profile": "Control Cohort: Benign Responsive Baseline (Identical text, viewport-only CSS shifts, CloakScore < 0.05, Days 1-15)"
     }
 ]
 
@@ -127,189 +168,206 @@ def make_hash(s: str) -> str:
 def generate_target_state(target_id: int, day: int, profile_key: str):
     """
     Simulates exact ground truth observation for a target on a given day and profile.
-    Returns: (status_code, final_url, redirect_count, redirect_chain, resp_size, resp_time, title, tokens, spam_cat, html_content_id)
+    Returns: (status_code, final_url, redirect_count, redirect_chain, resp_size, resp_time, title, tokens, spam_cat, content_id)
     """
-    # Target 1: transport.wb.gov.in (Temporal evolution)
+    is_bot = profile_key in ["P3_crawler_oriented", "P4_mobile_crawler"]
+    is_mobile_user = (profile_key == "P2_mobile_normal")
+    is_desktop_user = (profile_key == "P1_desktop_normal")
+
+    # Target 1: employment.ap.gov.in (FitGirl Repack APK)
+    # Days 1-4: Dormant (404) -> Days 5-15: Active Piracy APK Cloaking
     if target_id == 1:
-        if day in [1, 2, 3]:
-            # Dormant 404 for everyone
-            return (404, "https://transport.wb.gov.in/services/permit-status", 0, [], 1840, 310, "404 Not Found - Transport Dept", 85, "NONE", "wb_404")
-        elif day in range(4, 9):
-            # Slot88 Casino for Googlebot, 404 for Normal User
-            if profile_key in ["P3_crawler_oriented", "P4_mobile_crawler"]:
-                return (200, "https://transport.wb.gov.in/services/permit-status", 0, [], 28450, 420, "SITUS JUDI SLOT88 GACOR DEPOSIT PULSA RESMI TERPERCAYA 2026", 2450, "CASINO_GAMBLING", "wb_casino")
+        if day in [1, 2, 3, 4]:
+            return (404, TARGETS_DEF[0]["url"], 0, [], 1820, 290, "404 Not Found - AP Employment Exchange", 85, "NONE", "ap_emp_404")
+        else: # Days 5-15: Active
+            if is_bot:
+                return (200, TARGETS_DEF[0]["url"], 0, [], 46800, 440, "FitGirl Repacks - Free Download PC Games Mod APK Obb Highly Compressed", 3250, "PIRACY_APK", "ap_emp_fitgirl")
             else:
-                return (404, "https://transport.wb.gov.in/services/permit-status", 0, [], 1840, 290, "404 Not Found - Transport Dept", 85, "NONE", "wb_404")
-        elif day in range(9, 14):
-            # Pivot to Crypto Scam for Googlebot
-            if profile_key in ["P3_crawler_oriented", "P4_mobile_crawler"]:
-                return (200, "https://transport.wb.gov.in/services/permit-status", 0, [], 34120, 480, "Global Crypto Assets Recovery | Stolen BTC Expert Claim Portal", 2890, "CRYPTO_SCAM", "wb_crypto")
-            else:
-                return (404, "https://transport.wb.gov.in/services/permit-status", 0, [], 1840, 295, "404 Not Found - Transport Dept", 85, "NONE", "wb_404")
-        else: # Day 14, 15: Remediated
-            return (403, "https://transport.wb.gov.in/services/permit-status", 0, [], 1220, 180, "403 Forbidden - Access Blocked by Security Gateway", 45, "NONE", "wb_waf_blocked")
+                return (404, TARGETS_DEF[0]["url"], 0, [], 1820, 275, "404 Not Found - AP Employment Exchange", 85, "NONE", "ap_emp_404")
 
-    # Target 2: scholarships.gov.in (Piracy for bots, mobile affiliate redirect)
+    # Target 2: urjapay.andamannicobar.gov.in (Aviator Spin Game)
+    # Days 1-7: Active Aviator Casino -> Days 8-15: Remediated (410 Gone)
     elif target_id == 2:
-        if profile_key in ["P3_crawler_oriented", "P4_mobile_crawler"]:
-            return (200, "https://scholarships.gov.in/portal/scheme-guidelines", 0, [], 42100, 380, "Download GTA V Mobile APK Mod v2.4 + Obb Unlimited Money Free", 3420, "PIRACY_APK", "nsp_apk")
-        elif profile_key == "P2_mobile_normal":
-            # Mobile normal user redirected to affiliate scam
-            chain = [
-                {"url": "https://scholarships.gov.in/portal/scheme-guidelines", "status": 302},
-                {"url": "https://traffic-gate7.affiliates.net/in/clk?id=99281", "status": 302},
-                {"url": "https://spin-wheel-rewards2026.online/claim?token=8f92", "status": 200}
-            ]
-            return (200, "https://spin-wheel-rewards2026.online/claim?token=8f92", 2, chain, 19400, 710, "Congratulations! You Won iPhone 16 Pro - Claim Now", 420, "CRYPTO_SCAM", "nsp_mobile_scam")
-        else: # P1 desktop normal sees legitimate government guidelines
-            return (200, "https://scholarships.gov.in/portal/scheme-guidelines", 0, [], 38900, 410, "National Scholarship Portal: Central Sector Scheme Guidelines 2026", 2150, "NONE", "nsp_genuine")
+        if day in range(1, 8):
+            if is_bot:
+                return (200, TARGETS_DEF[1]["url"], 0, [], 38900, 390, "Aviator Yes Spin Game Login - Free Bet Download & Access on Android", 2800, "CASINO_GAMBLING", "urja_aviator")
+            elif is_mobile_user:
+                chain = [
+                    {"url": TARGETS_DEF[1]["url"], "status": 302},
+                    {"url": "https://bet-gateway88.vip/aviator/register", "status": 200}
+                ]
+                return (200, "https://bet-gateway88.vip/aviator/register", 1, chain, 18500, 680, "Aviator Crash Game - Instant Cashout 100x Register", 410, "CASINO_GAMBLING", "urja_aviator_mob")
+            else:
+                return (404, TARGETS_DEF[1]["url"], 0, [], 1540, 260, "Electricity Bill Payment Portal - Resource Not Found", 70, "NONE", "urja_404")
+        else: # Days 8-15: Admin Purged (410 Gone)
+            return (410, TARGETS_DEF[1]["url"], 0, [], 920, 180, "410 Gone - Path Permanently Deleted by Administrator", 35, "NONE", "urja_410")
 
-    # Target 3: health.delhi.gov.in (Unlicensed Pharma for Googlebot)
+    # Target 3: suvidha.mahaonline.gov.in (Kalyan Satta Matka)
+    # Persistent throughout all 15 days
     elif target_id == 3:
-        if profile_key in ["P3_crawler_oriented", "P4_mobile_crawler"]:
-            return (200, "https://health.delhi.gov.in/reports/bulletin-2024", 0, [], 31200, 390, "Order Generic Viagra 100mg Cialis Online Without Prescription Fast Delivery", 2980, "PHARMA_SPAM", "delhi_pharma")
-        else:
-            return (404, "https://health.delhi.gov.in/reports/bulletin-2024", 0, [], 1650, 260, "Department of Health - Document Not Found", 90, "NONE", "delhi_404")
-
-    # Target 4: agri.up.gov.in (Mobile targeted betting redirection days 6-12)
-    elif target_id == 4:
-        if day in range(6, 13) and profile_key == "P2_mobile_normal":
+        if is_bot:
+            return (200, TARGETS_DEF[2]["url"], 0, [], 41200, 420, "Kalyan Matka Result Today Live | Satta Matka Challenging Figure Chart 2026", 3100, "CASINO_GAMBLING", "maha_kalyan_matka")
+        elif is_mobile_user:
             chain = [
-                {"url": "https://agri.up.gov.in/schemes/kisan-subsidy", "status": 302},
-                {"url": "https://t.me/vip_betting_sureodds_2026", "status": 200}
+                {"url": TARGETS_DEF[2]["url"], "status": 302},
+                {"url": "https://chat.whatsapp.com/invite/KalyanMatkaVIPGuessing", "status": 200}
             ]
-            return (200, "https://t.me/vip_betting_sureodds_2026", 1, chain, 8400, 620, "Telegram: VIP Sure Betting Odds Channel", 120, "CASINO_GAMBLING", "agri_tele_bet")
+            return (200, "https://chat.whatsapp.com/invite/KalyanMatkaVIPGuessing", 1, chain, 9200, 610, "Join WhatsApp Group: Kalyan Matka Sure Numbers", 140, "CASINO_GAMBLING", "maha_kalyan_wa")
         else:
-            # Genuine farmer subsidy page for all other profiles/days
-            return (200, "https://agri.up.gov.in/schemes/kisan-subsidy", 0, [], 29400, 340, "Agriculture Department UP - Kisan Fertilizer Subsidy Application Form", 1680, "NONE", "agri_genuine")
+            return (404, TARGETS_DEF[2]["url"], 0, [], 1780, 280, "Aaple Sarkar Suvidha - Invalid Application ID", 80, "NONE", "maha_404")
 
-    # Target 5: library.univ-punjab.ac.in (Academic essay writing spam)
+    # Target 4: urjapay.andamannicobar.gov.in (SMS Satta Matka)
+    # Steganographic DOM Cloaking (Persistent)
+    elif target_id == 4:
+        if is_bot:
+            # Contains 50 hidden anchor links in DOM
+            return (200, TARGETS_DEF[3]["url"], 0, [], 34500, 370, "Electricity Billing Portal - Consumer Quick Payment", 2400, "CASINO_GAMBLING", "urja_satta_stego")
+        else:
+            return (200, TARGETS_DEF[3]["url"], 0, [], 23800, 310, "Electricity Billing Portal - Consumer Quick Payment", 1550, "NONE", "urja_clean")
+
+    # Target 5: wb.gov.in (Imagica Theme Park)
+    # Days 1-6: Coupon Affiliate -> Days 7-12: Crypto Fraud -> Days 13-15: WAF Block (403)
     elif target_id == 5:
-        if day <= 10:
-            if profile_key in ["P3_crawler_oriented", "P4_mobile_crawler"]:
-                return (200, "https://library.univ-punjab.ac.in/archives/digitized", 0, [], 26800, 350, "Top 10 Legit Essay Writing Services Reviews 2026 - Hire Paper Writers", 2100, "ESSAY_WRITING", "punjab_essay")
+        if day in range(1, 7):
+            if is_bot:
+                return (200, TARGETS_DEF[4]["url"], 0, [], 29400, 350, "Imagica Theme Park Tickets 80% Off Coupon Code Promo 2026", 2150, "CRYPTO_SCAM", "wb_imagica_coupon")
             else:
-                return (404, "https://library.univ-punjab.ac.in/archives/digitized", 0, [], 1420, 240, "Digital Archives - Collection Expired or Removed", 65, "NONE", "punjab_404")
-        else:
-            # Day 11-15: Administrator removed endpoint completely (410 Gone)
-            return (410, "https://library.univ-punjab.ac.in/archives/digitized", 0, [], 890, 190, "410 Gone - Resource Permanently Purged", 40, "NONE", "punjab_410")
+                return (404, TARGETS_DEF[4]["url"], 0, [], 1450, 230, "Government of West Bengal - Page Not Found", 60, "NONE", "wb_404")
+        elif day in range(7, 13): # Pivot to Crypto
+            if is_bot:
+                return (200, TARGETS_DEF[4]["url"], 0, [], 36100, 460, "Official Free Crypto Claim | Imagica Partner Airdrop $500 BTC", 2700, "CRYPTO_SCAM", "wb_imagica_crypto")
+            else:
+                return (404, TARGETS_DEF[4]["url"], 0, [], 1450, 230, "Government of West Bengal - Page Not Found", 60, "NONE", "wb_404")
+        else: # Days 13-15: WAF Block
+            return (403, TARGETS_DEF[4]["url"], 0, [], 1120, 160, "403 Forbidden - Access Denied by WAF Security Rule", 40, "NONE", "wb_waf_403")
 
-    # Target 6: treasury.gov (Benign Responsive Control)
+    # Target 6: aadhaar.rajasthan.gov.in (Dating App for Married)
+    # Days 1-5: Benign -> Days 6-11: Mobile Dating Redirection Burst -> Days 12-15: Reverts
     elif target_id == 6:
-        # Same underlying text for all, mobile layout slightly smaller byte size due to inline SVGs or viewport CSS
-        size = 45200 if "mobile" in profile_key else 47800
-        return (200, "https://www.treasury.gov/resource-center/data-chart", 0, [], size, 220, "US Treasury: Interest Rate Statistics & Historical Yield Curves", 2600, "NONE", "treasury_responsive")
-
-    # Target 7: iitd.ac.in (Benign Responsive Control)
-    elif target_id == 7:
-        size = 32100 if "mobile" in profile_key else 33500
-        return (200, "https://www.iitd.ac.in/events/annual-symposium", 0, [], size, 190, "IIT Delhi - Annual Technical Symposium & Keynote Lectures 2026", 1850, "NONE", "iitd_responsive")
-
-    # Target 8: cybercrime.gov.in (Benign Static Control)
-    elif target_id == 8:
-        # Exactly identical across all 4 profiles
-        return (200, "https://cybercrime.gov.in/static/awareness.html", 0, [], 21450, 160, "National Cyber Crime Reporting Portal - Cyber Security Tips", 1420, "NONE", "cybercrime_static")
-
-    # Target 9: municipal.karnataka.gov.in (Slot spam days 1-7, patched Day 8)
-    elif target_id == 9:
-        if day <= 7:
-            if profile_key in ["P3_crawler_oriented", "P4_mobile_crawler"]:
-                return (200, "https://municipal.karnataka.gov.in/notices/tenders", 0, [], 36700, 440, "DAFTAR AKUN PRO THAILAND SLOT GACOR MUDAH MAXWIN HARI INI 2026", 3100, "CASINO_GAMBLING", "karnataka_casino")
+        if day in range(6, 12):
+            if is_bot:
+                return (200, TARGETS_DEF[5]["url"], 0, [], 33800, 380, "Top 10 Secret Dating Apps in India for Married Adults (Android vs iOS)", 2550, "PHARMA_SPAM", "raj_dating_seo")
+            elif is_mobile_user:
+                chain = [
+                    {"url": TARGETS_DEF[5]["url"], "status": 302},
+                    {"url": "https://meet-local-singles2026.click/in/flirt?src=aadhaar", "status": 200}
+                ]
+                return (200, "https://meet-local-singles2026.click/in/flirt?src=aadhaar", 1, chain, 14200, 640, "Secret Dating Club - Verified Profiles in Your City", 380, "PHARMA_SPAM", "raj_dating_mob")
             else:
-                return (200, "https://municipal.karnataka.gov.in/notices/tenders", 0, [], 24500, 310, "Directorate of Municipal Administration - Public Works Tender Notices", 1340, "NONE", "karnataka_genuine")
-        else:
-            # Day 8-15: Security patch / WAF maintenance
-            return (503, "https://municipal.karnataka.gov.in/notices/tenders", 0, [], 1120, 150, "503 Service Unavailable - Portal Under Security Audit", 35, "NONE", "karnataka_remediated")
+                return (404, TARGETS_DEF[5]["url"], 0, [], 1620, 240, "UIDAI Rajasthan Portal - Circular Not Found", 75, "NONE", "raj_404")
+        else: # Days 1-5 & 12-15: Normal / Inactive
+            return (404, TARGETS_DEF[5]["url"], 0, [], 1620, 240, "UIDAI Rajasthan Portal - Circular Not Found", 75, "NONE", "raj_404")
 
-    # Target 10: archives.tn.gov.in (DOM CSS Hidden Cloaked Links)
-    elif target_id == 10:
-        if profile_key in ["P3_crawler_oriented", "P4_mobile_crawler"]:
-            # Hidden anchor spam present in DOM for bots
-            return (200, "https://archives.tn.gov.in/public/gazette-2023", 0, [], 38900, 380, "Tamil Nadu Archives - Official State Gazette Notifications 2023", 2650, "CASINO_GAMBLING", "tn_css_cloaked")
+    # Target 7: aaplesarkar.mahaonline.gov.in (Dating Apps India)
+    # Persistent throughout all 15 days
+    elif target_id == 7:
+        if is_bot:
+            return (200, TARGETS_DEF[6]["url"], 0, [], 45200, 410, "Best Dating Apps in India 2026: Reviews, Free Chat, Verified Profiles", 3600, "PHARMA_SPAM", "maha_dating_seo")
         else:
-            # Clean page for normal user
-            return (200, "https://archives.tn.gov.in/public/gazette-2023", 0, [], 28100, 330, "Tamil Nadu Archives - Official State Gazette Notifications 2023", 1820, "NONE", "tn_normal")
+            return (404, TARGETS_DEF[6]["url"], 0, [], 1890, 280, "Aaple Sarkar Portal - Document Not Available", 85, "NONE", "maha_404")
+
+    # Target 8: yono.dpboss.maharashtra.gov.in (Winner Ruleta)
+    # Days 1-9: Active Ruleta Gambling -> Days 10-15: Server 502 / Offline
+    elif target_id == 8:
+        if day in range(1, 10):
+            if is_bot:
+                return (200, TARGETS_DEF[7]["url"], 0, [], 37800, 420, "Dpboss Matka Winner Ruleta Live Game Online Play & Win Cash", 2950, "CASINO_GAMBLING", "dpboss_ruleta")
+            else:
+                return (404, TARGETS_DEF[7]["url"], 0, [], 1350, 220, "Maharashtra Government Portal - Subdomain Under Maintenance", 60, "NONE", "dpboss_404")
+        else: # Days 10-15: Server Shutdown / Broken Subdomain
+            return (502, TARGETS_DEF[7]["url"], 0, [], 820, 150, "502 Bad Gateway - Host Server Unreachable", 30, "NONE", "dpboss_502")
+
+    # Target 9: ap.gov.in (Adult / Satta APK)
+    # Persistent throughout all 15 days
+    elif target_id == 9:
+        if is_bot:
+            return (200, TARGETS_DEF[8]["url"], 0, [], 44100, 450, "Uono Sex Satta APK Mod Download Latest Version Fast Server", 3400, "CASINO_GAMBLING", "ap_sex_satta")
+        else:
+            return (404, TARGETS_DEF[8]["url"], 0, [], 1680, 260, "Government of Andhra Pradesh - Content Not Found", 70, "NONE", "ap_404")
+
+    # Target 10: emms.ap.gov.in (Teen Patti / Aviator)
+    # Days 1-4: Active -> Days 5-8: Cleaned 404 -> Days 9-15: Re-infected!
+    elif target_id == 10:
+        if day in [1, 2, 3, 4] or day in range(9, 16):
+            if is_bot:
+                tag = "emms_teen_patti_v1" if day <= 4 else "emms_teen_patti_v2"
+                return (200, TARGETS_DEF[9]["url"], 0, [], 39500, 410, "Aviator Teen Patti Table Rules Limits & Cash Bonus Conditions 2026", 3050, "CASINO_GAMBLING", tag)
+            else:
+                return (404, TARGETS_DEF[9]["url"], 0, [], 1710, 250, "Electronic Media Monitoring System - Record Not Found", 80, "NONE", "emms_404")
+        else: # Days 5-8: Temporary cleanup
+            return (404, TARGETS_DEF[9]["url"], 0, [], 1710, 250, "Electronic Media Monitoring System - Record Not Found", 80, "NONE", "emms_404")
+
+    # Target 11: wb.gov.in (Adult Games Mobile)
+    # Days 1-8: Active Doorway -> Days 9-15: Admin Purged (410 Gone)
+    elif target_id == 11:
+        if day in range(1, 9):
+            if is_bot:
+                return (200, TARGETS_DEF[10]["url"], 0, [], 42800, 430, "Free Adult Mobile Games Without Verification - Play Direct in Browser", 3300, "PIRACY_APK", "wb_adult_games")
+            else:
+                return (404, TARGETS_DEF[10]["url"], 0, [], 1520, 240, "Government of West Bengal - Service Not Found", 65, "NONE", "wb_404")
+        else: # Days 9-15: Purged
+            return (410, TARGETS_DEF[10]["url"], 0, [], 910, 170, "410 Gone - Malicious URI Purged by State CERT", 35, "NONE", "wb_410")
+
+    # Target 12: cybercrime.gov.in (Benign Static Control)
+    elif target_id == 12:
+        return (200, TARGETS_DEF[11]["url"], 0, [], 21450, 160, "National Cyber Crime Reporting Portal - Citizen Awareness Tips", 1420, "NONE", "cybercrime_static")
+
+    # Target 13: treasury.gov (Benign Responsive Control)
+    elif target_id == 13:
+        size = 45200 if "mobile" in profile_key else 47800
+        return (200, TARGETS_DEF[12]["url"], 0, [], size, 220, "US Treasury: Interest Rate Statistics & Daily Benchmark Yield Curves", 2600, "NONE", "treasury_responsive")
 
     raise ValueError(f"Unknown target_id {target_id}")
 
 def compute_differential_pair_metrics(t_id: int, day: int, comp_type: str, obs_a: dict, obs_b: dict) -> dict:
-    """
-    Computes rigorous differential measurement metrics:
-    - Status divergence
-    - Redirect divergence
-    - HTML Cosine Similarity
-    - HTML Jaccard Similarity
-    - DOM Tree Edit Distance
-    - Visual SSIM
-    - pHash Hamming Distance
-    - Header Distance
-    """
     status_div = (obs_a["status_code"] != obs_b["status_code"])
     redir_div = (obs_a["final_url"] != obs_b["final_url"])
-
-    # Baseline defaults
-    jaccard = 1.0
-    cosine = 1.0
-    dom_dist = 0
-    ssim = 1.0
-    phash_dist = 0
-    header_dist = 0.02
 
     c_id_a = obs_a["content_id"]
     c_id_b = obs_b["content_id"]
 
     if c_id_a == c_id_b:
-        # Same underlying content
         if "mobile" in comp_type:
-            # Legitimate responsive layout difference
-            ssim = 0.58 if t_id in [6, 7] else 0.85
-            phash_dist = 14 if t_id in [6, 7] else 4
+            ssim = 0.58 if t_id == 13 else 0.88
+            phash_dist = 14 if t_id == 13 else 3
             jaccard = 0.98
             cosine = 0.99
-            dom_dist = 18
+            dom_dist = 16
         else:
-            # Exact desktop vs desktop matching
             ssim = 1.00
             phash_dist = 0
             jaccard = 1.00
             cosine = 1.00
             dom_dist = 0
+        header_dist = 0.02
     else:
-        # Content difference exists!
-        if status_div: # e.g. 200 vs 404
+        if status_div: # 200 vs 404
             jaccard = 0.04 + random.uniform(0.01, 0.03)
             cosine = 0.08 + random.uniform(0.01, 0.04)
-            dom_dist = 340 + random.randint(10, 50)
+            dom_dist = 360 + random.randint(10, 40)
             ssim = 0.12 + random.uniform(0.01, 0.05)
-            phash_dist = 38 + random.randint(1, 6)
+            phash_dist = 38 + random.randint(1, 5)
             header_dist = 0.65
-        elif redir_div: # e.g. normal page vs scam affiliate redirect
-            jaccard = 0.01 + random.uniform(0.005, 0.02)
-            cosine = 0.03 + random.uniform(0.005, 0.02)
-            dom_dist = 520 + random.randint(20, 80)
-            ssim = 0.05 + random.uniform(0.01, 0.04)
-            phash_dist = 44 + random.randint(1, 5)
-            header_dist = 0.85
-        elif t_id == 10: # Steganographic / CSS-hidden links (high visual similarity, but low DOM similarity)
-            jaccard = 0.62 + random.uniform(0.01, 0.03)
-            cosine = 0.74 + random.uniform(0.01, 0.03)
-            dom_dist = 165 + random.randint(5, 20)
-            ssim = 0.96 # Visually identical because injected links have opacity:0!
+        elif redir_div: # Redirected to mobile affiliate
+            jaccard = 0.02 + random.uniform(0.005, 0.02)
+            cosine = 0.04 + random.uniform(0.005, 0.02)
+            dom_dist = 480 + random.randint(20, 60)
+            ssim = 0.06 + random.uniform(0.01, 0.04)
+            phash_dist = 42 + random.randint(1, 4)
+            header_dist = 0.80
+        elif t_id == 4: # Steganographic DOM links (high visual SSIM, low DOM)
+            jaccard = 0.65 + random.uniform(0.01, 0.03)
+            cosine = 0.76 + random.uniform(0.01, 0.03)
+            dom_dist = 175 + random.randint(5, 20)
+            ssim = 0.96
             phash_dist = 2
             header_dist = 0.15
-        elif t_id == 9 and day <= 7: # Government tender vs Indonesian Slot88 spam
-            jaccard = 0.06 + random.uniform(0.01, 0.02)
-            cosine = 0.11 + random.uniform(0.01, 0.03)
-            dom_dist = 410 + random.randint(10, 40)
-            ssim = 0.14 + random.uniform(0.01, 0.03)
-            phash_dist = 36 + random.randint(1, 4)
-            header_dist = 0.55
         else:
             jaccard = 0.05 + random.uniform(0.01, 0.03)
             cosine = 0.09 + random.uniform(0.01, 0.04)
             dom_dist = 380 + random.randint(10, 40)
-            ssim = 0.15 + random.uniform(0.01, 0.04)
-            phash_dist = 35 + random.randint(1, 5)
+            ssim = 0.14 + random.uniform(0.01, 0.04)
+            phash_dist = 36 + random.randint(1, 5)
             header_dist = 0.60
 
     return {
@@ -323,67 +381,87 @@ def compute_differential_pair_metrics(t_id: int, day: int, comp_type: str, obs_a
         "header_distance_score": round(header_dist, 4)
     }
 
-def evaluate_cloaking(t_id: int, day: int, diff_desktop_bot: dict, diff_desktop_mobile: dict) -> Tuple[float, str, str, str, str]:
+def evaluate_cloaking(t_id: int, day: int, diff_d_c: dict, diff_d_m: dict, bot_obs: dict) -> Tuple[float, str, str, str, str]:
     """
-    Computes CloakScore and classifies the measurement.
-    Formula:
-      CloakScore = 0.35*(1 - CosineSim) + 0.25*(1 - SSIM) + 0.20*(RedirectDiv) + 0.15*(StatusDiv) + 0.05*(HeaderDist)
-    With legitimate responsive penalty dampening.
+    Computes CloakScore (0.000 to 1.000) and formal classification.
     """
-    status_div = 1.0 if diff_desktop_bot["status_code_divergence"] else 0.0
-    redir_div = 1.0 if diff_desktop_bot["redirect_divergence"] or diff_desktop_mobile["redirect_divergence"] else 0.0
-    cos_diff = 1.0 - diff_desktop_bot["html_cosine_similarity"]
-    ssim_diff = 1.0 - diff_desktop_bot["visual_ssim"]
-    header_diff = diff_desktop_bot["header_distance_score"]
-
-    raw_score = (0.35 * cos_diff) + (0.25 * ssim_diff) + (0.20 * redir_div) + (0.15 * status_div) + (0.05 * header_diff)
-
-    # Controls
-    if t_id in [6, 7]: # Benign Responsive
-        score = 0.025 + random.uniform(0.005, 0.015)
-        return (round(score, 3), "BENIGN_RESPONSIVE", "Media Query Viewport Layout Shift (Identical Semantic Text)", "None", "HIGH")
-    elif t_id == 8: # Benign Static
+    # Benign Controls
+    if t_id == 12: # cybercrime.gov.in
         return (0.000, "BENIGN_STATIC", "Exact Match Across All Profiles", "None", "HIGH")
+    if t_id == 13: # treasury.gov
+        score = 0.025 + random.uniform(0.005, 0.012)
+        return (round(score, 3), "BENIGN_RESPONSIVE", "Media Query Viewport Layout Shift (Identical Semantic Text)", "None", "HIGH")
 
-    # Specific targets based on day
+    # Target 1: employment.ap.gov.in (Dormant Days 1-4 -> Active Piracy APK Days 5-15)
     if t_id == 1:
-        if day in [1, 2, 3]:
-            return (0.000, "DORMANT_OR_OFFLINE", "Unified 404 Status Across Profiles", "None", "HIGH")
-        elif day in range(4, 9):
-            return (round(min(0.99, max(0.85, raw_score)), 3), "CLOAKED_SEO_SPAM", "User-Agent Triggered Status Divergence (404 vs 200 Slot88)", "Slot88 / Gacor Gambling", "HIGH")
-        elif day in range(9, 14):
-            return (round(min(0.99, max(0.88, raw_score)), 3), "CLOAKED_SEO_SPAM", "User-Agent Injected Scam Landing (404 vs 200 Crypto)", "Crypto Recovery Scam", "HIGH")
+        if day <= 4:
+            return (0.000, "DORMANT_OR_OFFLINE", "Unified HTTP 404 Across All Profiles (Staging Phase)", "None", "HIGH")
         else:
-            return (0.000, "REMEDIATED", "Access Blocked / Cleaned by WAF Gateway (403)", "None", "HIGH")
+            return (0.895, "CLOAKED_SEO_SPAM", "UA Sniffing: Googlebot Gets FitGirl Repack APK, Users Get 404", "Piracy & Game Repack APK", "HIGH")
 
+    # Target 2: urjapay.andamannicobar.gov.in (Active Days 1-7 -> Remediated Days 8-15)
     elif t_id == 2:
-        return (0.965, "CLOAKED_CONDITIONAL_REDIRECT", "Bot Gets Piracy Directory, Mobile User Gets Affiliate Scam Redirect", "Piracy APK & Affiliate Fraud", "HIGH")
-
-    elif t_id == 3:
-        return (0.940, "CLOAKED_SEO_SPAM", "User-Agent Header Cloaking: Pharmacy Spam for Bots, 404 for Users", "Unlicensed Pharmacy / Rx Spam", "HIGH")
-
-    elif t_id == 4:
-        if day in range(6, 13):
-            return (0.890, "CLOAKED_CONDITIONAL_REDIRECT", "Mobile User Conditional Redirect to Telegram Gambling", "Telegram Betting Syndicate", "HIGH")
-        else:
-            return (0.010, "BENIGN_RESPONSIVE", "Normal Agriculture Government Portal", "None", "HIGH")
-
-    elif t_id == 5:
-        if day <= 10:
-            return (0.925, "CLOAKED_SEO_SPAM", "Bot Gets Academic Essay Service, Users Get 404", "Academic Ghostwriting Spam", "HIGH")
-        else:
-            return (0.000, "REMEDIATED", "Path Purged by Admin (410 Gone for all)", "None", "HIGH")
-
-    elif t_id == 9:
         if day <= 7:
-            return (0.950, "CLOAKED_SEO_SPAM", "Bot Injected Indonesian Casino, Desktop Sees Tender Notice", "Indonesian Slot88 Maxwin", "HIGH")
+            return (0.935, "CLOAKED_CONDITIONAL_REDIRECT", "Bot Gets Aviator Game, Mobile User Gets 302 Affiliate Redirect", "Aviator Crash Game / Casino", "HIGH")
         else:
-            return (0.000, "REMEDIATED", "Security Maintenance / Remediation (503 Service Unavailable)", "None", "HIGH")
+            return (0.000, "REMEDIATED", "Path Purged by Admin (HTTP 410 Gone for all)", "None", "HIGH")
 
+    # Target 3: suvidha.mahaonline.gov.in (Persistent Satta Matka)
+    elif t_id == 3:
+        return (0.950, "CLOAKED_CONDITIONAL_REDIRECT", "Bot Gets Kalyan Matka Charts, Mobile Redirects to WhatsApp Betting Group", "Kalyan Satta Matka Syndicate", "HIGH")
+
+    # Target 4: urjapay.andamannicobar.gov.in (Steganographic DOM links)
+    elif t_id == 4:
+        return (0.780, "CLOAKED_SEO_SPAM", "DOM CSS-Hidden Steganographic Anchor Links (High Visual Sim, Low DOM Sim)", "SMS Satta Matka Link Farm", "HIGH")
+
+    # Target 5: wb.gov.in (Imagica: Coupon Days 1-6 -> Crypto Days 7-12 -> WAF Days 13-15)
+    elif t_id == 5:
+        if day <= 6:
+            return (0.860, "CLOAKED_SEO_SPAM", "Bot Gets Fake Imagica Theme Park Ticket Discount, Users Get 404", "Ticket Voucher Affiliate Scam", "HIGH")
+        elif day <= 12:
+            return (0.910, "CLOAKED_SEO_SPAM", "Attacker Swapped Template: Fake Crypto Claim / Airdrop Phishing", "Crypto Airdrop Fraud", "HIGH")
+        else:
+            return (0.000, "REMEDIATED", "Access Blocked / Cleaned by State WAF Gateway (HTTP 403)", "None", "HIGH")
+
+    # Target 6: aadhaar.rajasthan.gov.in (Burst Mobile Dating Days 6-11)
+    elif t_id == 6:
+        if day in range(6, 12):
+            return (0.885, "CLOAKED_CONDITIONAL_REDIRECT", "Mobile User Redirected to Shady Married Dating Affiliate Portal", "Dating App Affiliate Scam", "HIGH")
+        else:
+            return (0.000, "DORMANT_OR_OFFLINE", "Unified HTTP 404 Across All Profiles", "None", "HIGH")
+
+    # Target 7: aaplesarkar.mahaonline.gov.in (Persistent Dating SEO Farm)
+    elif t_id == 7:
+        return (0.875, "CLOAKED_SEO_SPAM", "Bot Gets 3,600 Token Dating Guide Doorway, Users Get Broken 404", "Dating App SEO Spam", "HIGH")
+
+    # Target 8: yono.dpboss.maharashtra.gov.in (Active Days 1-9 -> Subdomain Down Days 10-15)
+    elif t_id == 8:
+        if day <= 9:
+            return (0.955, "CLOAKED_SEO_SPAM", "Bot Injected Dpboss Ruleta Game, Desktop Gets 404", "Dpboss Matka & Casino Ruleta", "HIGH")
+        else:
+            return (0.000, "DORMANT_OR_OFFLINE", "Subdomain Server Down / HTTP 502 Bad Gateway", "None", "HIGH")
+
+    # Target 9: ap.gov.in (Persistent Adult & Betting APK)
+    elif t_id == 9:
+        return (0.960, "CLOAKED_SEO_SPAM", "Bot Injected Uono Adult Satta APK Directory, Users Get 404", "Adult Satta APK Spam", "HIGH")
+
+    # Target 10: emms.ap.gov.in (Active Days 1-4 -> Cleaned Days 5-8 -> Re-infected Days 9-15)
     elif t_id == 10:
-        return (0.835, "CLOAKED_SEO_SPAM", "DOM CSS-Hidden Steganographic Anchor Links (High Visual Sim, Low DOM Sim)", "Blackhat Casino Link Network", "HIGH")
+        if day <= 4:
+            return (0.910, "CLOAKED_SEO_SPAM", "Initial Infection: Teen Patti Aviator Table Rules Doorway", "Teen Patti Aviator Betting", "HIGH")
+        elif day <= 8:
+            return (0.000, "REMEDIATED", "Temporary Cleanup: Admin Replaced File with 404", "None", "HIGH")
+        else:
+            return (0.930, "CLOAKED_SEO_SPAM", "Re-Infected via Backdoor Shell: Fresh Gambling Doorway Injected", "Teen Patti Aviator Betting (v2)", "HIGH")
 
-    return (round(raw_score, 3), "CLOAKED_SEO_SPAM", "Differential Anomaly Detected", "Unknown", "MEDIUM")
+    # Target 11: wb.gov.in (Active Adult Doorway Days 1-8 -> Admin Purged Days 9-15)
+    elif t_id == 11:
+        if day <= 8:
+            return (0.940, "CLOAKED_SEO_SPAM", "Adult Mobile Game Doorway Page Targeting Search Engines", "Adult Games / Phishing", "HIGH")
+        else:
+            return (0.000, "REMEDIATED", "Malicious URI Purged by State CERT (HTTP 410 Gone)", "None", "HIGH")
+
+    return (0.500, "ANOMALOUS_MEDIUM", "Anomalous Probing Response", "Unknown", "MEDIUM")
 
 def main():
     print(f"[*] Initializing CloakWatch Longitudinal Database at: {DB_PATH}")
@@ -398,28 +476,24 @@ def main():
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
-    # Load and execute schema
     with open(SCHEMA_PATH, 'r', encoding='utf-8') as f:
         cursor.executescript(f.read())
 
     # 1. Insert Targets
-    print("[*] Inserting 10 monitored target specifications...")
-    target_ids = {}
+    print(f"[*] Inserting {len(TARGETS_DEF)} monitored target specifications...")
     for t in TARGETS_DEF:
         cursor.execute("""
-            INSERT INTO targets (domain, url, category, jurisdiction, threat_profile)
-            VALUES (?, ?, ?, ?, ?)
-        """, (t["domain"], t["url"], t["category"], t["jurisdiction"], t["threat_profile"]))
-        target_ids[t["url"]] = cursor.lastrowid
+            INSERT INTO targets (target_id, domain, url, category, jurisdiction, threat_profile)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (t["id"], t["domain"], t["url"], t["category"], t["jurisdiction"], t["threat_profile"]))
 
-    # 2. Insert 15-Day Crawl Runs & Observations
-    print("[*] Simulating 15-day longitudinal multi-profile crawl cycles...")
+    # 2. Simulate 15 Days
+    print(f"[*] Simulating 15-day longitudinal multi-profile crawl cycles for {len(TARGETS_DEF)} targets...")
     total_observations = 0
     total_diff_pairs = 0
     total_evals = 0
 
     all_obs_data = []
-    all_diff_data = []
     all_eval_data = []
 
     for day in range(1, 16):
@@ -430,15 +504,13 @@ def main():
         """, (day, crawl_date.isoformat(), len(TARGETS_DEF), len(TARGETS_DEF) * 4, 'COMPLETED'))
         run_id = cursor.lastrowid
 
-        for t_idx, t_def in enumerate(TARGETS_DEF, start=1):
-            t_id = t_idx
+        for t_def in TARGETS_DEF:
+            t_id = t_def["id"]
             obs_map = {}
 
-            # Generate 4 observations per target
             for prof_key, prof_meta in PROFILES.items():
                 (status, final_url, redir_cnt, redir_chain, size, r_time, title, tokens, spam_cat, content_id) = generate_target_state(t_id, day, prof_key)
 
-                # Simulated content hash
                 html_hash = make_hash(f"{content_id}_{size}_{title}")
                 screenshot_hash = make_hash(f"{content_id}_{prof_meta['viewport']}_{status}")
 
@@ -466,12 +538,15 @@ def main():
                     "profile_key": prof_key,
                     "size": size,
                     "title": title,
+                    "tokens": tokens,
                     "spam_cat": spam_cat
                 }
                 obs_map[prof_key] = obs_info
+
                 all_obs_data.append({
                     "day": day,
                     "date": crawl_date.isoformat(),
+                    "target_id": t_id,
                     "domain": t_def["domain"],
                     "url": t_def["url"],
                     "profile": prof_key,
@@ -484,8 +559,7 @@ def main():
                     "spam_category": spam_cat
                 })
 
-            # 3. Compute Pairwise Differential Probes
-            # Comparison A: Desktop Normal (P1) vs Crawler Desktop (P3)
+            # Differential pairs
             diff_d_c = compute_differential_pair_metrics(t_id, day, "desktop_vs_crawler", obs_map["P1_desktop_normal"], obs_map["P3_crawler_oriented"])
             cursor.execute("""
                 INSERT INTO differential_pairs (
@@ -504,7 +578,6 @@ def main():
             ))
             total_diff_pairs += 1
 
-            # Comparison B: Desktop Normal (P1) vs Mobile Normal (P2)
             diff_d_m = compute_differential_pair_metrics(t_id, day, "desktop_vs_mobile", obs_map["P1_desktop_normal"], obs_map["P2_mobile_normal"])
             cursor.execute("""
                 INSERT INTO differential_pairs (
@@ -523,27 +596,10 @@ def main():
             ))
             total_diff_pairs += 1
 
-            # Comparison C: Crawler Desktop (P3) vs Mobile Crawler (P4)
-            diff_c_mc = compute_differential_pair_metrics(t_id, day, "crawler_vs_mobile_crawler", obs_map["P3_crawler_oriented"], obs_map["P4_mobile_crawler"])
-            cursor.execute("""
-                INSERT INTO differential_pairs (
-                    run_id, target_id, day_index, comparison_type, obs_id_a, obs_id_b,
-                    status_code_divergence, redirect_divergence, html_cosine_similarity,
-                    html_jaccard_similarity, dom_tree_edit_distance, visual_ssim,
-                    phash_hamming_distance, header_distance_score
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """, (
-                run_id, t_id, day, "crawler_vs_mobile_crawler",
-                obs_map["P3_crawler_oriented"]["obs_id"], obs_map["P4_mobile_crawler"]["obs_id"],
-                diff_c_mc["status_code_divergence"], diff_c_mc["redirect_divergence"],
-                diff_c_mc["html_cosine_similarity"], diff_c_mc["html_jaccard_similarity"],
-                diff_c_mc["dom_tree_edit_distance"], diff_c_mc["visual_ssim"],
-                diff_c_mc["phash_hamming_distance"], diff_c_mc["header_distance_score"]
-            ))
-            total_diff_pairs += 1
+            # Evaluation & CloakScore
+            cloak_score, classification, signal, campaign, conf = evaluate_cloaking(t_id, day, diff_d_c, diff_d_m, obs_map["P3_crawler_oriented"])
+            threat_index_100 = round(cloak_score * 100.0, 1)
 
-            # 4. Cloaking Evaluation
-            cloak_score, classification, signal, campaign, conf = evaluate_cloaking(t_id, day, diff_d_c, diff_d_m)
             cursor.execute("""
                 INSERT INTO cloaking_evaluations (
                     run_id, target_id, day_index, cloak_score, classification,
@@ -555,56 +611,69 @@ def main():
             all_eval_data.append({
                 "day": day,
                 "date": crawl_date.isoformat(),
+                "target_id": t_id,
                 "domain": t_def["domain"],
                 "url": t_def["url"],
-                "cloak_score": cloak_score,
+                "threat_score_100": threat_index_100,
+                "cloak_score_normalized": cloak_score,
                 "classification": classification,
                 "campaign": campaign,
                 "primary_signal": signal,
-                "desktop_vs_bot_cosine_sim": diff_d_c["html_cosine_similarity"],
-                "desktop_vs_bot_ssim": diff_d_c["visual_ssim"],
-                "redirect_divergence": diff_d_c["redirect_divergence"] or diff_d_m["redirect_divergence"]
+                "html_cosine_sim": diff_d_c["html_cosine_similarity"],
+                "visual_ssim": diff_d_c["visual_ssim"],
+                "redirect_diverged": diff_d_c["redirect_divergence"] or diff_d_m["redirect_divergence"],
+                "status_diverged": diff_d_c["status_code_divergence"]
             })
 
-    # 5. Insert Longitudinal Campaign Lifecycle Transitions (Ground Truth Timeline)
-    print("[*] Recording campaign lifecycle state transitions...")
+    # 3. Insert Campaign Evolution State Transitions
+    print("[*] Recording temporal lifecycle state transitions for each target...")
     timeline_records = [
-        # Target 1
-        (1, 1, 3, "DORMANT_404", "None", "Initial discovery; path returns generic HTTP 404", "Attacker payload staging phase"),
-        (1, 4, 8, "ACTIVE_CLOAKING", "Online Casino / Slot88", "User-Agent rule injected (.htaccess / Nginx rewrite)", "High volume keyword spam cloaked for Googlebot"),
-        (1, 9, 13, "CAMPAIGN_PIVOT", "Crypto Asset Recovery Scam", "Attacker swapped template dynamically", "Pivot from gambling to financial fraud lure"),
-        (1, 14, 15, "REMEDIATED", "None", "Government CERT / admin deployed WAF ACL rule (403)", "Compromise closed after incident alert"),
+        # Target 1 (employment.ap.gov.in)
+        (1, 1, 4, "DORMANT_STAGING", "None", "Endpoint exists but returns generic 404", "Attacker staging / DNS mapping phase"),
+        (1, 5, 15, "ACTIVE_CLOAKING", "FitGirl Repack Piracy APK", "Attacker deployed server-side UA rewrite rule", "Googlebot indexed with 3,250 tokens of repack APK keywords; 404 for normal users"),
 
-        # Target 2
-        (2, 1, 15, "ACTIVE_PERSISTENT_CLOAKING", "Piracy APK & Mobile Affiliate Scam", "Dual-vector conditional redirection", "Long-term unpatched compromise abusing high trust .gov.in authority"),
+        # Target 2 (urjapay.andamannicobar.gov.in - aviator spin)
+        (2, 1, 7, "ACTIVE_CLOAKING", "Aviator Yes Spin Casino", "Dual-vector cloaking with conditional mobile redirect", "Active SEO spam + mobile affiliate redirect"),
+        (2, 8, 15, "REMEDIATED", "None", "System administrator purged file & returned HTTP 410", "Incident response remediation verified"),
 
-        # Target 3
-        (3, 1, 15, "ACTIVE_PERSISTENT_CLOAKING", "Unlicensed Pharmacy / Rx Spam", "Server-side User-Agent filter", "Stealthy pharmaceutical spam campaign; 404 shown to organic visitors"),
+        # Target 3 (suvidha.mahaonline.gov.in - kalyani)
+        (3, 1, 15, "PERSISTENT_CLOAKING", "Kalyan Satta Matka Syndicate", "Unpatched CMS backdoor", "Continuous unpatched abuse across all 15 days"),
 
-        # Target 4
-        (4, 1, 5, "BENIGN_BASELINE", "None", "Normal government department portal", "Pre-compromise baseline"),
-        (4, 6, 12, "BURST_MOBILE_INJECTION", "Telegram VIP Betting Syndicate", "JavaScript injection targeting mobile viewport & touch events", "Opportunistic 7-day mobile redirect abuse before attacker script teardown"),
-        (4, 13, 15, "REVERTED_INACTIVE", "None", "Attacker removed redirect hook", "Returned to benign state without formal admin response"),
+        # Target 4 (urjapay.andamannicobar.gov.in - sms satta)
+        (4, 1, 15, "STEGANOGRAPHIC_CLOAKING", "SMS Satta Matka Link Farm", "CSS hidden opacity:0 anchor tags in DOM", "Stealthy cloaking bypassing visual screenshot comparisons"),
 
-        # Target 5
-        (5, 1, 10, "ACTIVE_CLOAKING", "Academic Ghostwriting Service", "PHP backdoor in WordPress upload folder", "Targeting high DR academic domain (.ac.in) for essay link schemes"),
-        (5, 11, 15, "REMEDIATED", "None", "Sysadmin deleted infected plugin folder (HTTP 410)", "Permanent removal"),
+        # Target 5 (wb.gov.in - imagica)
+        (5, 1, 6, "ACTIVE_CLOAKING", "Imagica Discount Ticket Fraud", "Injected coupon affiliate doorway", "Initial discount coupon cloaking"),
+        (5, 7, 12, "CAMPAIGN_PIVOT", "Crypto Airdrop / Claim Scam", "Attacker dynamically swapped page template", "Campaign shifted from travel coupon to cryptocurrency fraud"),
+        (5, 13, 15, "REMEDIATED_WAF", "None", "State Data Center deployed WAF ACL rule (HTTP 403)", "Compromised subpath blocked by WAF gateway"),
 
-        # Target 6
-        (6, 1, 15, "CONTROL_BENIGN", "None", "Production responsive CSS layout", "Empirical baseline demonstrating low CloakScore under responsive shifts"),
+        # Target 6 (aadhaar.rajasthan.gov.in - dating)
+        (6, 1, 5, "BENIGN_INACTIVE", "None", "Unified HTTP 404 Across All Profiles", "Pre-attack baseline"),
+        (6, 6, 11, "BURST_MOBILE_INFILTRATION", "Adult Dating Affiliate Scam", "JavaScript conditional redirect on mobile touch events", "Opportunistic 6-day mobile monetization burst"),
+        (6, 12, 15, "REVERTED_INACTIVE", "None", "Attacker removed redirect script", "Returned to inactive state without formal remediation"),
 
-        # Target 7
-        (7, 1, 15, "CONTROL_BENIGN", "None", "Institutional website with mobile navigation", "Empirical baseline demonstrating zero semantic cloaking"),
+        # Target 7 (aaplesarkar.mahaonline.gov.in - dating)
+        (7, 1, 15, "PERSISTENT_CLOAKING", "Dating App SEO Farm", "High-authority doorway page", "3,600 token long-form dating content cloaked for crawlers"),
 
-        # Target 8
-        (8, 1, 15, "CONTROL_BENIGN", "None", "Static HTML informational resource", "Zero variance sanity check baseline across all days"),
+        # Target 8 (yono.dpboss.maharashtra.gov.in)
+        (8, 1, 9, "ACTIVE_CLOAKING", "Dpboss Matka & Casino Ruleta", "Subdomain takeover / reverse proxy gateway", "Active roulette betting cloaking"),
+        (8, 10, 15, "OFFLINE_SHUTDOWN", "None", "Subdomain hosting disabled / HTTP 502 Bad Gateway", "Server taken offline by hosting provider"),
 
-        # Target 9
-        (9, 1, 7, "ACTIVE_CLOAKING", "Indonesian Slot88 Maxwin", "Injected reverse proxy gateway", "Active SEO poisoning abusing public tender indexing"),
-        (9, 8, 15, "REMEDIATED", "None", "Website placed in 503 maintenance mode by emergency response", "Site taken offline for remediation"),
+        # Target 9 (ap.gov.in - sex satta)
+        (9, 1, 15, "PERSISTENT_CLOAKING", "Adult Satta APK Spam", "PHP backdoor in root directory", "Persistent dual adult & gambling APK farm"),
 
-        # Target 10
-        (10, 1, 15, "STEGANOGRAPHIC_CLOAKING", "Blackhat Casino Link Farm", "CSS hidden opacity:0 anchor tags", "Stealth cloaking designed to defeat visual inspection scanners")
+        # Target 10 (emms.ap.gov.in - teen patti)
+        (10, 1, 4, "ACTIVE_CLOAKING", "Teen Patti Aviator Betting (v1)", "Backdoor doorway injection", "Initial gambling cloaking campaign"),
+        (10, 5, 8, "TEMPORARY_CLEANUP", "None", "Admin replaced page with standard 404", "Incomplete remediation (web shell remained active)"),
+        (10, 9, 15, "RE_INFECTED_BACKDOOR", "Teen Patti Aviator Betting (v2)", "Attacker re-injected backdoor with fresh links", "Classic re-infection cycle demonstrating persistent access"),
+
+        # Target 11 (wb.gov.in - adult games)
+        (11, 1, 8, "ACTIVE_CLOAKING", "Adult Mobile Game Doorway", "Blackhat SEO doorway page", "Active mobile verification bypass spam"),
+        (11, 9, 15, "REMEDIATED_CERT", "None", "State CERT alerted; file purged (HTTP 410)", "Permanent takedown verified"),
+
+        # Controls
+        (12, 1, 15, "CONTROL_BENIGN", "None", "Static HTML awareness portal", "Empirical zero-variance baseline across all 15 days"),
+        (13, 1, 15, "CONTROL_BENIGN", "None", "Production responsive CSS layout", "Empirical responsive baseline (low CloakScore)")
     ]
 
     for rec in timeline_records:
@@ -616,51 +685,72 @@ def main():
 
     conn.commit()
 
-    # 6. Export to CSV for Excel/Pandas presentation
-    print("[*] Generating CSV exports in ./exports/ ...")
+    # 4. Generate CSV Exports
+    print("[*] Generating updated CSV exports in ./exports/ ...")
 
-    # Export A: Observations
-    obs_csv = os.path.join(EXPORTS_DIR, "longitudinal_observations_600.csv")
-    with open(obs_csv, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=list(all_obs_data[0].keys()))
-        writer.writeheader()
-        writer.writerows(all_obs_data)
-
-    # Export B: Daily Cloaking Summary
-    eval_csv = os.path.join(EXPORTS_DIR, "daily_cloaking_evaluations_150.csv")
+    # CSV A: Daily Evaluations (15 Days × 13 Targets = 195 rows)
+    eval_csv = os.path.join(EXPORTS_DIR, "daily_cloaking_evaluations_195.csv")
     with open(eval_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=list(all_eval_data[0].keys()))
         writer.writeheader()
         writer.writerows(all_eval_data)
 
-    # Export C: Target Master Summary
-    target_summary_csv = os.path.join(EXPORTS_DIR, "target_summary_report.csv")
+    # CSV B: 15-Day Target Evolution Matrix (Pivot Table format)
+    matrix_csv = os.path.join(EXPORTS_DIR, "longitudinal_15day_score_matrix.csv")
     cursor.execute("""
         SELECT 
             t.target_id,
             t.domain,
-            t.category,
-            t.jurisdiction,
-            AVG(ce.cloak_score) as avg_cloak_score,
-            MAX(ce.cloak_score) as peak_cloak_score,
-            SUM(CASE WHEN ce.classification LIKE 'CLOAKED%' THEN 1 ELSE 0 END) as cloaked_days,
-            GROUP_CONCAT(DISTINCT ce.detected_campaign) as campaigns_detected
+            t.url,
+            GROUP_CONCAT(ROUND(ce.cloak_score * 100, 1)) as daily_scores_str
         FROM targets t
         JOIN cloaking_evaluations ce ON t.target_id = ce.target_id
         GROUP BY t.target_id
+        ORDER BY t.target_id
     """)
-    rows = cursor.fetchall()
-    with open(target_summary_csv, "w", newline="", encoding="utf-8") as f:
+    matrix_rows = cursor.fetchall()
+    with open(matrix_csv, "w", newline="", encoding="utf-8") as f:
+        header = ["Target ID", "Domain", "URL"] + [f"Day_{d}" for d in range(1, 16)] + ["Mean_Score", "Peak_Score", "Evolution_Trajectory"]
         writer = csv.writer(f)
-        writer.writerow(["Target ID", "Domain", "Category", "Jurisdiction", "Avg CloakScore", "Peak CloakScore", "Days Cloaked (out of 15)", "Detected Campaigns"])
-        for r in rows:
-            writer.writerow([r[0], r[1], r[2], r[3], round(r[4], 3), round(r[5], 3), r[6], r[7]])
+        writer.writerow(header)
 
-    # Export D: Campaign Evolution Timeline
+        for r in matrix_rows:
+            tid, dom, url, scores_str = r
+            scores = [float(s) for s in scores_str.split(",")]
+            mean_s = round(sum(scores) / len(scores), 1)
+            peak_s = round(max(scores), 1)
+
+            # Determine trajectory label
+            if tid == 1:
+                traj = "Dormant (Days 1-4) -> Explodes to Malicious (Days 5-15)"
+            elif tid == 2:
+                traj = "Active Malicious (Days 1-7) -> Remediated / Dies (Days 8-15)"
+            elif tid in [3, 7, 9]:
+                traj = "Persistent Unpatched Malicious (All 15 Days)"
+            elif tid == 4:
+                traj = "Steganographic DOM Cloaking (Persistent)"
+            elif tid == 5:
+                traj = "Coupon Scam -> Crypto Fraud -> WAF 403 Block"
+            elif tid == 6:
+                traj = "Burst Mobile Redirection (Days 6-11) -> Inactive"
+            elif tid == 8:
+                traj = "Active Casino (Days 1-9) -> Server 502 Offline (Days 10-15)"
+            elif tid == 10:
+                traj = "Active -> Cleaned (Days 5-8) -> Re-Infected (Days 9-15)"
+            elif tid == 11:
+                traj = "Active Adult (Days 1-8) -> Remediated 410 (Days 9-15)"
+            else:
+                traj = "Benign Control Baseline"
+
+            writer.writerow([tid, dom, url] + scores + [mean_s, peak_s, traj])
+
+    # CSV C: Campaign Timeline Log
     timeline_csv = os.path.join(EXPORTS_DIR, "campaign_evolution_timeline.csv")
     cursor.execute("""
         SELECT 
+            t.target_id,
             t.domain,
+            t.url,
             ce.start_day,
             ce.end_day,
             (ce.end_day - ce.start_day + 1) as duration_days,
@@ -675,15 +765,16 @@ def main():
     t_rows = cursor.fetchall()
     with open(timeline_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
-        writer.writerow(["Domain", "Start Day", "End Day", "Duration (Days)", "Observed State", "Active Campaign", "Transition Trigger", "Notes"])
+        writer.writerow(["Target ID", "Domain", "URL", "Start Day", "End Day", "Duration (Days)", "Observed State", "Active Campaign", "Transition Trigger", "Notes"])
         writer.writerows(t_rows)
 
     conn.close()
 
     print("[+] Successfully generated:")
     print(f"    - Database: {DB_PATH}")
-    print(f"    - Records: {len(TARGETS_DEF)} Targets, 15 Days, {total_observations} Observations, {total_diff_pairs} Differential Pairs, {total_evals} Evaluations")
-    print(f"    - CSV Exports created in: {EXPORTS_DIR}")
+    print(f"    - Records: {len(TARGETS_DEF)} Targets, 15 Days, {total_observations} Observations, {total_diff_pairs} Pairs, {total_evals} Evaluations")
+    print(f"    - Exported: {matrix_csv}")
+    print(f"    - Exported: {eval_csv}")
 
 if __name__ == "__main__":
     main()

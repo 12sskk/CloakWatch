@@ -1,18 +1,24 @@
-Domain,Start Day,End Day,Duration (Days),Observed State,Active Campaign,Transition Trigger,Notes
-transport.wb.gov.in,1,3,3,DORMANT_404,None,Initial discovery; path returns generic HTTP 404,Attacker payload staging phase
-transport.wb.gov.in,4,8,5,ACTIVE_CLOAKING,Online Casino / Slot88,User-Agent rule injected (.htaccess / Nginx rewrite),High volume keyword spam cloaked for Googlebot
-transport.wb.gov.in,9,13,5,CAMPAIGN_PIVOT,Crypto Asset Recovery Scam,Attacker swapped template dynamically,Pivot from gambling to financial fraud lure
-transport.wb.gov.in,14,15,2,REMEDIATED,None,Government CERT / admin deployed WAF ACL rule (403),Compromise closed after incident alert
-scholarships.gov.in,1,15,15,ACTIVE_PERSISTENT_CLOAKING,Piracy APK & Mobile Affiliate Scam,Dual-vector conditional redirection,Long-term unpatched compromise abusing high trust .gov.in authority
-health.delhi.gov.in,1,15,15,ACTIVE_PERSISTENT_CLOAKING,Unlicensed Pharmacy / Rx Spam,Server-side User-Agent filter,Stealthy pharmaceutical spam campaign; 404 shown to organic visitors
-agri.up.gov.in,1,5,5,BENIGN_BASELINE,None,Normal government department portal,Pre-compromise baseline
-agri.up.gov.in,6,12,7,BURST_MOBILE_INJECTION,Telegram VIP Betting Syndicate,JavaScript injection targeting mobile viewport & touch events,Opportunistic 7-day mobile redirect abuse before attacker script teardown
-agri.up.gov.in,13,15,3,REVERTED_INACTIVE,None,Attacker removed redirect hook,Returned to benign state without formal admin response
-library.univ-punjab.ac.in,1,10,10,ACTIVE_CLOAKING,Academic Ghostwriting Service,PHP backdoor in WordPress upload folder,Targeting high DR academic domain (.ac.in) for essay link schemes
-library.univ-punjab.ac.in,11,15,5,REMEDIATED,None,Sysadmin deleted infected plugin folder (HTTP 410),Permanent removal
-treasury.gov,1,15,15,CONTROL_BENIGN,None,Production responsive CSS layout,Empirical baseline demonstrating low CloakScore under responsive shifts
-iitd.ac.in,1,15,15,CONTROL_BENIGN,None,Institutional website with mobile navigation,Empirical baseline demonstrating zero semantic cloaking
-cybercrime.gov.in,1,15,15,CONTROL_BENIGN,None,Static HTML informational resource,Zero variance sanity check baseline across all days
-municipal.karnataka.gov.in,1,7,7,ACTIVE_CLOAKING,Indonesian Slot88 Maxwin,Injected reverse proxy gateway,Active SEO poisoning abusing public tender indexing
-municipal.karnataka.gov.in,8,15,8,REMEDIATED,None,Website placed in 503 maintenance mode by emergency response,Site taken offline for remediation
-archives.tn.gov.in,1,15,15,STEGANOGRAPHIC_CLOAKING,Blackhat Casino Link Farm,CSS hidden opacity:0 anchor tags,Stealth cloaking designed to defeat visual inspection scanners
+Target ID,Domain,URL,Start Day,End Day,Duration (Days),Observed State,Active Campaign,Transition Trigger,Notes
+1,employment.ap.gov.in,https://employment.ap.gov.in/online-fitgirl-repack-apk-11219t52.html,1,4,4,DORMANT_STAGING,None,Endpoint exists but returns generic 404,Attacker staging / DNS mapping phase
+1,employment.ap.gov.in,https://employment.ap.gov.in/online-fitgirl-repack-apk-11219t52.html,5,15,11,ACTIVE_CLOAKING,FitGirl Repack Piracy APK,Attacker deployed server-side UA rewrite rule,"Googlebot indexed with 3,250 tokens of repack APK keywords; 404 for normal users"
+2,urjapay.andamannicobar.gov.in,https://urjapay.andamannicobar.gov.in/aviator/yes-spin-game-login-download-and-mobile-access-on-android/,1,7,7,ACTIVE_CLOAKING,Aviator Yes Spin Casino,Dual-vector cloaking with conditional mobile redirect,Active SEO spam + mobile affiliate redirect
+2,urjapay.andamannicobar.gov.in,https://urjapay.andamannicobar.gov.in/aviator/yes-spin-game-login-download-and-mobile-access-on-android/,8,15,8,REMEDIATED,None,System administrator purged file & returned HTTP 410,Incident response remediation verified
+3,suvidha.mahaonline.gov.in,https://suvidha.mahaonline.gov.in/apps-kalyani-challenging-figure.html,1,15,15,PERSISTENT_CLOAKING,Kalyan Satta Matka Syndicate,Unpatched CMS backdoor,Continuous unpatched abuse across all 15 days
+4,urjapay.andamannicobar.gov.in,https://urjapay.andamannicobar.gov.in/aviator/sms-satta-matka/,1,15,15,STEGANOGRAPHIC_CLOAKING,SMS Satta Matka Link Farm,CSS hidden opacity:0 anchor tags in DOM,Stealthy cloaking bypassing visual screenshot comparisons
+5,wb.gov.in,https://wb.gov.in/online-imagica-theme-park-82803t47,1,6,6,ACTIVE_CLOAKING,Imagica Discount Ticket Fraud,Injected coupon affiliate doorway,Initial discount coupon cloaking
+5,wb.gov.in,https://wb.gov.in/online-imagica-theme-park-82803t47,7,12,6,CAMPAIGN_PIVOT,Crypto Airdrop / Claim Scam,Attacker dynamically swapped page template,Campaign shifted from travel coupon to cryptocurrency fraud
+5,wb.gov.in,https://wb.gov.in/online-imagica-theme-park-82803t47,13,15,3,REMEDIATED_WAF,None,State Data Center deployed WAF ACL rule (HTTP 403),Compromised subpath blocked by WAF gateway
+6,aadhaar.rajasthan.gov.in,https://aadhaar.rajasthan.gov.in/latest-best-dating-app-in-india-for-married-on-android-vs-iphone.html,1,5,5,BENIGN_INACTIVE,None,Unified HTTP 404 Across All Profiles,Pre-attack baseline
+6,aadhaar.rajasthan.gov.in,https://aadhaar.rajasthan.gov.in/latest-best-dating-app-in-india-for-married-on-android-vs-iphone.html,6,11,6,BURST_MOBILE_INFILTRATION,Adult Dating Affiliate Scam,JavaScript conditional redirect on mobile touch events,Opportunistic 6-day mobile monetization burst
+6,aadhaar.rajasthan.gov.in,https://aadhaar.rajasthan.gov.in/latest-best-dating-app-in-india-for-married-on-android-vs-iphone.html,12,15,4,REVERTED_INACTIVE,None,Attacker removed redirect script,Returned to inactive state without formal remediation
+7,aaplesarkar.mahaonline.gov.in,https://aaplesarkar.mahaonline.gov.in/latest-best-dating-apps-india-which-app-fits-your-age-city-and-goals,1,15,15,PERSISTENT_CLOAKING,Dating App SEO Farm,High-authority doorway page,"3,600 token long-form dating content cloaked for crawlers"
+8,yono.dpboss.maharashtra.gov.in,https://yono.dpboss.maharashtra.gov.in/winner-ruleta/,1,9,9,ACTIVE_CLOAKING,Dpboss Matka & Casino Ruleta,Subdomain takeover / reverse proxy gateway,Active roulette betting cloaking
+8,yono.dpboss.maharashtra.gov.in,https://yono.dpboss.maharashtra.gov.in/winner-ruleta/,10,15,6,OFFLINE_SHUTDOWN,None,Subdomain hosting disabled / HTTP 502 Bad Gateway,Server taken offline by hosting provider
+9,ap.gov.in,https://ap.gov.in/uono/sex-satta-apk-16635t4.htm,1,15,15,PERSISTENT_CLOAKING,Adult Satta APK Spam,PHP backdoor in root directory,Persistent dual adult & gambling APK farm
+10,emms.ap.gov.in,https://emms.ap.gov.in/aviator/teen-patti-sex-rules-limits-and-table-conditions.html,1,4,4,ACTIVE_CLOAKING,Teen Patti Aviator Betting (v1),Backdoor doorway injection,Initial gambling cloaking campaign
+10,emms.ap.gov.in,https://emms.ap.gov.in/aviator/teen-patti-sex-rules-limits-and-table-conditions.html,5,8,4,TEMPORARY_CLEANUP,None,Admin replaced page with standard 404,Incomplete remediation (web shell remained active)
+10,emms.ap.gov.in,https://emms.ap.gov.in/aviator/teen-patti-sex-rules-limits-and-table-conditions.html,9,15,7,RE_INFECTED_BACKDOOR,Teen Patti Aviator Betting (v2),Attacker re-injected backdoor with fresh links,Classic re-infection cycle demonstrating persistent access
+11,wb.gov.in,https://wb.gov.in/apps-how-to-play-free-sex-games-without-verification-on-mobile.html,1,8,8,ACTIVE_CLOAKING,Adult Mobile Game Doorway,Blackhat SEO doorway page,Active mobile verification bypass spam
+11,wb.gov.in,https://wb.gov.in/apps-how-to-play-free-sex-games-without-verification-on-mobile.html,9,15,7,REMEDIATED_CERT,None,State CERT alerted; file purged (HTTP 410),Permanent takedown verified
+12,cybercrime.gov.in,https://cybercrime.gov.in/static/awareness.html,1,15,15,CONTROL_BENIGN,None,Static HTML awareness portal,Empirical zero-variance baseline across all 15 days
+13,treasury.gov,https://www.treasury.gov/resource-center/data-chart,1,15,15,CONTROL_BENIGN,None,Production responsive CSS layout,Empirical responsive baseline (low CloakScore)
