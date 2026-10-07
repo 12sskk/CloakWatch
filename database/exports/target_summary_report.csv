@@ -1,0 +1,11 @@
+Target ID,Domain,Category,Jurisdiction,Avg CloakScore,Peak CloakScore,Days Cloaked (out of 15),Detected Campaigns
+1,transport.wb.gov.in,GOVERNMENT_STATE,"West Bengal, India",0.577,0.88,10,"None,Slot88 / Gacor Gambling,Crypto Recovery Scam"
+2,scholarships.gov.in,GOVERNMENT_NATIONAL,National (India),0.965,0.965,15,Piracy APK & Affiliate Fraud
+3,health.delhi.gov.in,GOVERNMENT_MUNICIPAL,"Delhi NCT, India",0.94,0.94,15,Unlicensed Pharmacy / Rx Spam
+4,agri.up.gov.in,GOVERNMENT_STATE,"Uttar Pradesh, India",0.421,0.89,7,"None,Telegram Betting Syndicate"
+5,library.univ-punjab.ac.in,ACADEMIC,"Punjab, India",0.617,0.925,10,"Academic Ghostwriting Spam,None"
+6,treasury.gov,BENIGN_CONTROL,Federal (United States),0.036,0.04,0,None
+7,iitd.ac.in,BENIGN_CONTROL,National Institute (India),0.036,0.04,0,None
+8,cybercrime.gov.in,BENIGN_CONTROL,National (India),0.0,0.0,0,None
+9,municipal.karnataka.gov.in,GOVERNMENT_MUNICIPAL,"Karnataka, India",0.443,0.95,7,"Indonesian Slot88 Maxwin,None"
+10,archives.tn.gov.in,GOVERNMENT_STATE,"Tamil Nadu, India",0.835,0.835,15,Blackhat Casino Link Network

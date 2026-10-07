@@ -1,0 +1,151 @@
+day,date,domain,url,cloak_score,classification,campaign,primary_signal,desktop_vs_bot_cosine_sim,desktop_vs_bot_ssim,redirect_divergence
+1,2026-09-15,transport.wb.gov.in,https://transport.wb.gov.in/services/permit-status,0.0,DORMANT_OR_OFFLINE,None,Unified 404 Status Across Profiles,1.0,1.0,False
+1,2026-09-15,scholarships.gov.in,https://scholarships.gov.in/portal/scheme-guidelines,0.965,CLOAKED_CONDITIONAL_REDIRECT,Piracy APK & Affiliate Fraud,"Bot Gets Piracy Directory, Mobile User Gets Affiliate Scam Redirect",0.1008,0.1673,True
+1,2026-09-15,health.delhi.gov.in,https://health.delhi.gov.in/reports/bulletin-2024,0.94,CLOAKED_SEO_SPAM,Unlicensed Pharmacy / Rx Spam,"User-Agent Header Cloaking: Pharmacy Spam for Bots, 404 for Users",0.0909,0.1393,False
+1,2026-09-15,agri.up.gov.in,https://agri.up.gov.in/schemes/kisan-subsidy,0.01,BENIGN_RESPONSIVE,None,Normal Agriculture Government Portal,1.0,1.0,False
+1,2026-09-15,library.univ-punjab.ac.in,https://library.univ-punjab.ac.in/archives/digitized,0.925,CLOAKED_SEO_SPAM,Academic Ghostwriting Spam,"Bot Gets Academic Essay Service, Users Get 404",0.096,0.1468,False
+1,2026-09-15,treasury.gov,https://www.treasury.gov/resource-center/data-chart,0.036,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+1,2026-09-15,iitd.ac.in,https://www.iitd.ac.in/events/annual-symposium,0.038,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+1,2026-09-15,cybercrime.gov.in,https://cybercrime.gov.in/static/awareness.html,0.0,BENIGN_STATIC,None,Exact Match Across All Profiles,1.0,1.0,False
+1,2026-09-15,municipal.karnataka.gov.in,https://municipal.karnataka.gov.in/notices/tenders,0.95,CLOAKED_SEO_SPAM,Indonesian Slot88 Maxwin,"Bot Injected Indonesian Casino, Desktop Sees Tender Notice",0.1361,0.1585,False
+1,2026-09-15,archives.tn.gov.in,https://archives.tn.gov.in/public/gazette-2023,0.835,CLOAKED_SEO_SPAM,Blackhat Casino Link Network,"DOM CSS-Hidden Steganographic Anchor Links (High Visual Sim, Low DOM Sim)",0.7691,0.96,False
+2,2026-09-16,transport.wb.gov.in,https://transport.wb.gov.in/services/permit-status,0.0,DORMANT_OR_OFFLINE,None,Unified 404 Status Across Profiles,1.0,1.0,False
+2,2026-09-16,scholarships.gov.in,https://scholarships.gov.in/portal/scheme-guidelines,0.965,CLOAKED_CONDITIONAL_REDIRECT,Piracy APK & Affiliate Fraud,"Bot Gets Piracy Directory, Mobile User Gets Affiliate Scam Redirect",0.1114,0.1854,True
+2,2026-09-16,health.delhi.gov.in,https://health.delhi.gov.in/reports/bulletin-2024,0.94,CLOAKED_SEO_SPAM,Unlicensed Pharmacy / Rx Spam,"User-Agent Header Cloaking: Pharmacy Spam for Bots, 404 for Users",0.0988,0.1547,False
+2,2026-09-16,agri.up.gov.in,https://agri.up.gov.in/schemes/kisan-subsidy,0.01,BENIGN_RESPONSIVE,None,Normal Agriculture Government Portal,1.0,1.0,False
+2,2026-09-16,library.univ-punjab.ac.in,https://library.univ-punjab.ac.in/archives/digitized,0.925,CLOAKED_SEO_SPAM,Academic Ghostwriting Spam,"Bot Gets Academic Essay Service, Users Get 404",0.1111,0.1565,False
+2,2026-09-16,treasury.gov,https://www.treasury.gov/resource-center/data-chart,0.04,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+2,2026-09-16,iitd.ac.in,https://www.iitd.ac.in/events/annual-symposium,0.039,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+2,2026-09-16,cybercrime.gov.in,https://cybercrime.gov.in/static/awareness.html,0.0,BENIGN_STATIC,None,Exact Match Across All Profiles,1.0,1.0,False
+2,2026-09-16,municipal.karnataka.gov.in,https://municipal.karnataka.gov.in/notices/tenders,0.95,CLOAKED_SEO_SPAM,Indonesian Slot88 Maxwin,"Bot Injected Indonesian Casino, Desktop Sees Tender Notice",0.1276,0.1627,False
+2,2026-09-16,archives.tn.gov.in,https://archives.tn.gov.in/public/gazette-2023,0.835,CLOAKED_SEO_SPAM,Blackhat Casino Link Network,"DOM CSS-Hidden Steganographic Anchor Links (High Visual Sim, Low DOM Sim)",0.7571,0.96,False
+3,2026-09-17,transport.wb.gov.in,https://transport.wb.gov.in/services/permit-status,0.0,DORMANT_OR_OFFLINE,None,Unified 404 Status Across Profiles,1.0,1.0,False
+3,2026-09-17,scholarships.gov.in,https://scholarships.gov.in/portal/scheme-guidelines,0.965,CLOAKED_CONDITIONAL_REDIRECT,Piracy APK & Affiliate Fraud,"Bot Gets Piracy Directory, Mobile User Gets Affiliate Scam Redirect",0.1205,0.1783,True
+3,2026-09-17,health.delhi.gov.in,https://health.delhi.gov.in/reports/bulletin-2024,0.94,CLOAKED_SEO_SPAM,Unlicensed Pharmacy / Rx Spam,"User-Agent Header Cloaking: Pharmacy Spam for Bots, 404 for Users",0.0997,0.1392,False
+3,2026-09-17,agri.up.gov.in,https://agri.up.gov.in/schemes/kisan-subsidy,0.01,BENIGN_RESPONSIVE,None,Normal Agriculture Government Portal,1.0,1.0,False
+3,2026-09-17,library.univ-punjab.ac.in,https://library.univ-punjab.ac.in/archives/digitized,0.925,CLOAKED_SEO_SPAM,Academic Ghostwriting Spam,"Bot Gets Academic Essay Service, Users Get 404",0.102,0.1384,False
+3,2026-09-17,treasury.gov,https://www.treasury.gov/resource-center/data-chart,0.039,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+3,2026-09-17,iitd.ac.in,https://www.iitd.ac.in/events/annual-symposium,0.033,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+3,2026-09-17,cybercrime.gov.in,https://cybercrime.gov.in/static/awareness.html,0.0,BENIGN_STATIC,None,Exact Match Across All Profiles,1.0,1.0,False
+3,2026-09-17,municipal.karnataka.gov.in,https://municipal.karnataka.gov.in/notices/tenders,0.95,CLOAKED_SEO_SPAM,Indonesian Slot88 Maxwin,"Bot Injected Indonesian Casino, Desktop Sees Tender Notice",0.1279,0.1629,False
+3,2026-09-17,archives.tn.gov.in,https://archives.tn.gov.in/public/gazette-2023,0.835,CLOAKED_SEO_SPAM,Blackhat Casino Link Network,"DOM CSS-Hidden Steganographic Anchor Links (High Visual Sim, Low DOM Sim)",0.7549,0.96,False
+4,2026-09-18,transport.wb.gov.in,https://transport.wb.gov.in/services/permit-status,0.85,CLOAKED_SEO_SPAM,Slot88 / Gacor Gambling,User-Agent Triggered Status Divergence (404 vs 200 Slot88),0.1029,0.146,False
+4,2026-09-18,scholarships.gov.in,https://scholarships.gov.in/portal/scheme-guidelines,0.965,CLOAKED_CONDITIONAL_REDIRECT,Piracy APK & Affiliate Fraud,"Bot Gets Piracy Directory, Mobile User Gets Affiliate Scam Redirect",0.1041,0.1627,True
+4,2026-09-18,health.delhi.gov.in,https://health.delhi.gov.in/reports/bulletin-2024,0.94,CLOAKED_SEO_SPAM,Unlicensed Pharmacy / Rx Spam,"User-Agent Header Cloaking: Pharmacy Spam for Bots, 404 for Users",0.1015,0.1698,False
+4,2026-09-18,agri.up.gov.in,https://agri.up.gov.in/schemes/kisan-subsidy,0.01,BENIGN_RESPONSIVE,None,Normal Agriculture Government Portal,1.0,1.0,False
+4,2026-09-18,library.univ-punjab.ac.in,https://library.univ-punjab.ac.in/archives/digitized,0.925,CLOAKED_SEO_SPAM,Academic Ghostwriting Spam,"Bot Gets Academic Essay Service, Users Get 404",0.1066,0.1572,False
+4,2026-09-18,treasury.gov,https://www.treasury.gov/resource-center/data-chart,0.037,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+4,2026-09-18,iitd.ac.in,https://www.iitd.ac.in/events/annual-symposium,0.035,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+4,2026-09-18,cybercrime.gov.in,https://cybercrime.gov.in/static/awareness.html,0.0,BENIGN_STATIC,None,Exact Match Across All Profiles,1.0,1.0,False
+4,2026-09-18,municipal.karnataka.gov.in,https://municipal.karnataka.gov.in/notices/tenders,0.95,CLOAKED_SEO_SPAM,Indonesian Slot88 Maxwin,"Bot Injected Indonesian Casino, Desktop Sees Tender Notice",0.1328,0.1559,False
+4,2026-09-18,archives.tn.gov.in,https://archives.tn.gov.in/public/gazette-2023,0.835,CLOAKED_SEO_SPAM,Blackhat Casino Link Network,"DOM CSS-Hidden Steganographic Anchor Links (High Visual Sim, Low DOM Sim)",0.7691,0.96,False
+5,2026-09-19,transport.wb.gov.in,https://transport.wb.gov.in/services/permit-status,0.85,CLOAKED_SEO_SPAM,Slot88 / Gacor Gambling,User-Agent Triggered Status Divergence (404 vs 200 Slot88),0.1129,0.1665,False
+5,2026-09-19,scholarships.gov.in,https://scholarships.gov.in/portal/scheme-guidelines,0.965,CLOAKED_CONDITIONAL_REDIRECT,Piracy APK & Affiliate Fraud,"Bot Gets Piracy Directory, Mobile User Gets Affiliate Scam Redirect",0.1192,0.166,True
+5,2026-09-19,health.delhi.gov.in,https://health.delhi.gov.in/reports/bulletin-2024,0.94,CLOAKED_SEO_SPAM,Unlicensed Pharmacy / Rx Spam,"User-Agent Header Cloaking: Pharmacy Spam for Bots, 404 for Users",0.1047,0.1672,False
+5,2026-09-19,agri.up.gov.in,https://agri.up.gov.in/schemes/kisan-subsidy,0.01,BENIGN_RESPONSIVE,None,Normal Agriculture Government Portal,1.0,1.0,False
+5,2026-09-19,library.univ-punjab.ac.in,https://library.univ-punjab.ac.in/archives/digitized,0.925,CLOAKED_SEO_SPAM,Academic Ghostwriting Spam,"Bot Gets Academic Essay Service, Users Get 404",0.0972,0.1679,False
+5,2026-09-19,treasury.gov,https://www.treasury.gov/resource-center/data-chart,0.037,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+5,2026-09-19,iitd.ac.in,https://www.iitd.ac.in/events/annual-symposium,0.038,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+5,2026-09-19,cybercrime.gov.in,https://cybercrime.gov.in/static/awareness.html,0.0,BENIGN_STATIC,None,Exact Match Across All Profiles,1.0,1.0,False
+5,2026-09-19,municipal.karnataka.gov.in,https://municipal.karnataka.gov.in/notices/tenders,0.95,CLOAKED_SEO_SPAM,Indonesian Slot88 Maxwin,"Bot Injected Indonesian Casino, Desktop Sees Tender Notice",0.1307,0.1526,False
+5,2026-09-19,archives.tn.gov.in,https://archives.tn.gov.in/public/gazette-2023,0.835,CLOAKED_SEO_SPAM,Blackhat Casino Link Network,"DOM CSS-Hidden Steganographic Anchor Links (High Visual Sim, Low DOM Sim)",0.7533,0.96,False
+6,2026-09-20,transport.wb.gov.in,https://transport.wb.gov.in/services/permit-status,0.85,CLOAKED_SEO_SPAM,Slot88 / Gacor Gambling,User-Agent Triggered Status Divergence (404 vs 200 Slot88),0.1179,0.1585,False
+6,2026-09-20,scholarships.gov.in,https://scholarships.gov.in/portal/scheme-guidelines,0.965,CLOAKED_CONDITIONAL_REDIRECT,Piracy APK & Affiliate Fraud,"Bot Gets Piracy Directory, Mobile User Gets Affiliate Scam Redirect",0.1195,0.187,True
+6,2026-09-20,health.delhi.gov.in,https://health.delhi.gov.in/reports/bulletin-2024,0.94,CLOAKED_SEO_SPAM,Unlicensed Pharmacy / Rx Spam,"User-Agent Header Cloaking: Pharmacy Spam for Bots, 404 for Users",0.0966,0.1583,False
+6,2026-09-20,agri.up.gov.in,https://agri.up.gov.in/schemes/kisan-subsidy,0.89,CLOAKED_CONDITIONAL_REDIRECT,Telegram Betting Syndicate,Mobile User Conditional Redirect to Telegram Gambling,1.0,1.0,True
+6,2026-09-20,library.univ-punjab.ac.in,https://library.univ-punjab.ac.in/archives/digitized,0.925,CLOAKED_SEO_SPAM,Academic Ghostwriting Spam,"Bot Gets Academic Essay Service, Users Get 404",0.1101,0.1516,False
+6,2026-09-20,treasury.gov,https://www.treasury.gov/resource-center/data-chart,0.039,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+6,2026-09-20,iitd.ac.in,https://www.iitd.ac.in/events/annual-symposium,0.036,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+6,2026-09-20,cybercrime.gov.in,https://cybercrime.gov.in/static/awareness.html,0.0,BENIGN_STATIC,None,Exact Match Across All Profiles,1.0,1.0,False
+6,2026-09-20,municipal.karnataka.gov.in,https://municipal.karnataka.gov.in/notices/tenders,0.95,CLOAKED_SEO_SPAM,Indonesian Slot88 Maxwin,"Bot Injected Indonesian Casino, Desktop Sees Tender Notice",0.1357,0.1581,False
+6,2026-09-20,archives.tn.gov.in,https://archives.tn.gov.in/public/gazette-2023,0.835,CLOAKED_SEO_SPAM,Blackhat Casino Link Network,"DOM CSS-Hidden Steganographic Anchor Links (High Visual Sim, Low DOM Sim)",0.7586,0.96,False
+7,2026-09-21,transport.wb.gov.in,https://transport.wb.gov.in/services/permit-status,0.85,CLOAKED_SEO_SPAM,Slot88 / Gacor Gambling,User-Agent Triggered Status Divergence (404 vs 200 Slot88),0.1159,0.1569,False
+7,2026-09-21,scholarships.gov.in,https://scholarships.gov.in/portal/scheme-guidelines,0.965,CLOAKED_CONDITIONAL_REDIRECT,Piracy APK & Affiliate Fraud,"Bot Gets Piracy Directory, Mobile User Gets Affiliate Scam Redirect",0.1121,0.184,True
+7,2026-09-21,health.delhi.gov.in,https://health.delhi.gov.in/reports/bulletin-2024,0.94,CLOAKED_SEO_SPAM,Unlicensed Pharmacy / Rx Spam,"User-Agent Header Cloaking: Pharmacy Spam for Bots, 404 for Users",0.0975,0.1477,False
+7,2026-09-21,agri.up.gov.in,https://agri.up.gov.in/schemes/kisan-subsidy,0.89,CLOAKED_CONDITIONAL_REDIRECT,Telegram Betting Syndicate,Mobile User Conditional Redirect to Telegram Gambling,1.0,1.0,True
+7,2026-09-21,library.univ-punjab.ac.in,https://library.univ-punjab.ac.in/archives/digitized,0.925,CLOAKED_SEO_SPAM,Academic Ghostwriting Spam,"Bot Gets Academic Essay Service, Users Get 404",0.1155,0.1463,False
+7,2026-09-21,treasury.gov,https://www.treasury.gov/resource-center/data-chart,0.032,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+7,2026-09-21,iitd.ac.in,https://www.iitd.ac.in/events/annual-symposium,0.034,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+7,2026-09-21,cybercrime.gov.in,https://cybercrime.gov.in/static/awareness.html,0.0,BENIGN_STATIC,None,Exact Match Across All Profiles,1.0,1.0,False
+7,2026-09-21,municipal.karnataka.gov.in,https://municipal.karnataka.gov.in/notices/tenders,0.95,CLOAKED_SEO_SPAM,Indonesian Slot88 Maxwin,"Bot Injected Indonesian Casino, Desktop Sees Tender Notice",0.1276,0.1553,False
+7,2026-09-21,archives.tn.gov.in,https://archives.tn.gov.in/public/gazette-2023,0.835,CLOAKED_SEO_SPAM,Blackhat Casino Link Network,"DOM CSS-Hidden Steganographic Anchor Links (High Visual Sim, Low DOM Sim)",0.7639,0.96,False
+8,2026-09-22,transport.wb.gov.in,https://transport.wb.gov.in/services/permit-status,0.85,CLOAKED_SEO_SPAM,Slot88 / Gacor Gambling,User-Agent Triggered Status Divergence (404 vs 200 Slot88),0.0989,0.1532,False
+8,2026-09-22,scholarships.gov.in,https://scholarships.gov.in/portal/scheme-guidelines,0.965,CLOAKED_CONDITIONAL_REDIRECT,Piracy APK & Affiliate Fraud,"Bot Gets Piracy Directory, Mobile User Gets Affiliate Scam Redirect",0.1094,0.1775,True
+8,2026-09-22,health.delhi.gov.in,https://health.delhi.gov.in/reports/bulletin-2024,0.94,CLOAKED_SEO_SPAM,Unlicensed Pharmacy / Rx Spam,"User-Agent Header Cloaking: Pharmacy Spam for Bots, 404 for Users",0.0921,0.157,False
+8,2026-09-22,agri.up.gov.in,https://agri.up.gov.in/schemes/kisan-subsidy,0.89,CLOAKED_CONDITIONAL_REDIRECT,Telegram Betting Syndicate,Mobile User Conditional Redirect to Telegram Gambling,1.0,1.0,True
+8,2026-09-22,library.univ-punjab.ac.in,https://library.univ-punjab.ac.in/archives/digitized,0.925,CLOAKED_SEO_SPAM,Academic Ghostwriting Spam,"Bot Gets Academic Essay Service, Users Get 404",0.0925,0.1526,False
+8,2026-09-22,treasury.gov,https://www.treasury.gov/resource-center/data-chart,0.039,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+8,2026-09-22,iitd.ac.in,https://www.iitd.ac.in/events/annual-symposium,0.032,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+8,2026-09-22,cybercrime.gov.in,https://cybercrime.gov.in/static/awareness.html,0.0,BENIGN_STATIC,None,Exact Match Across All Profiles,1.0,1.0,False
+8,2026-09-22,municipal.karnataka.gov.in,https://municipal.karnataka.gov.in/notices/tenders,0.0,REMEDIATED,None,Security Maintenance / Remediation (503 Service Unavailable),1.0,1.0,False
+8,2026-09-22,archives.tn.gov.in,https://archives.tn.gov.in/public/gazette-2023,0.835,CLOAKED_SEO_SPAM,Blackhat Casino Link Network,"DOM CSS-Hidden Steganographic Anchor Links (High Visual Sim, Low DOM Sim)",0.7548,0.96,False
+9,2026-09-23,transport.wb.gov.in,https://transport.wb.gov.in/services/permit-status,0.88,CLOAKED_SEO_SPAM,Crypto Recovery Scam,User-Agent Injected Scam Landing (404 vs 200 Crypto),0.1094,0.1426,False
+9,2026-09-23,scholarships.gov.in,https://scholarships.gov.in/portal/scheme-guidelines,0.965,CLOAKED_CONDITIONAL_REDIRECT,Piracy APK & Affiliate Fraud,"Bot Gets Piracy Directory, Mobile User Gets Affiliate Scam Redirect",0.1186,0.1899,True
+9,2026-09-23,health.delhi.gov.in,https://health.delhi.gov.in/reports/bulletin-2024,0.94,CLOAKED_SEO_SPAM,Unlicensed Pharmacy / Rx Spam,"User-Agent Header Cloaking: Pharmacy Spam for Bots, 404 for Users",0.1011,0.1475,False
+9,2026-09-23,agri.up.gov.in,https://agri.up.gov.in/schemes/kisan-subsidy,0.89,CLOAKED_CONDITIONAL_REDIRECT,Telegram Betting Syndicate,Mobile User Conditional Redirect to Telegram Gambling,1.0,1.0,True
+9,2026-09-23,library.univ-punjab.ac.in,https://library.univ-punjab.ac.in/archives/digitized,0.925,CLOAKED_SEO_SPAM,Academic Ghostwriting Spam,"Bot Gets Academic Essay Service, Users Get 404",0.1066,0.1676,False
+9,2026-09-23,treasury.gov,https://www.treasury.gov/resource-center/data-chart,0.033,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+9,2026-09-23,iitd.ac.in,https://www.iitd.ac.in/events/annual-symposium,0.039,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+9,2026-09-23,cybercrime.gov.in,https://cybercrime.gov.in/static/awareness.html,0.0,BENIGN_STATIC,None,Exact Match Across All Profiles,1.0,1.0,False
+9,2026-09-23,municipal.karnataka.gov.in,https://municipal.karnataka.gov.in/notices/tenders,0.0,REMEDIATED,None,Security Maintenance / Remediation (503 Service Unavailable),1.0,1.0,False
+9,2026-09-23,archives.tn.gov.in,https://archives.tn.gov.in/public/gazette-2023,0.835,CLOAKED_SEO_SPAM,Blackhat Casino Link Network,"DOM CSS-Hidden Steganographic Anchor Links (High Visual Sim, Low DOM Sim)",0.7531,0.96,False
+10,2026-09-24,transport.wb.gov.in,https://transport.wb.gov.in/services/permit-status,0.88,CLOAKED_SEO_SPAM,Crypto Recovery Scam,User-Agent Injected Scam Landing (404 vs 200 Crypto),0.1115,0.1575,False
+10,2026-09-24,scholarships.gov.in,https://scholarships.gov.in/portal/scheme-guidelines,0.965,CLOAKED_CONDITIONAL_REDIRECT,Piracy APK & Affiliate Fraud,"Bot Gets Piracy Directory, Mobile User Gets Affiliate Scam Redirect",0.1075,0.1854,True
+10,2026-09-24,health.delhi.gov.in,https://health.delhi.gov.in/reports/bulletin-2024,0.94,CLOAKED_SEO_SPAM,Unlicensed Pharmacy / Rx Spam,"User-Agent Header Cloaking: Pharmacy Spam for Bots, 404 for Users",0.0979,0.1521,False
+10,2026-09-24,agri.up.gov.in,https://agri.up.gov.in/schemes/kisan-subsidy,0.89,CLOAKED_CONDITIONAL_REDIRECT,Telegram Betting Syndicate,Mobile User Conditional Redirect to Telegram Gambling,1.0,1.0,True
+10,2026-09-24,library.univ-punjab.ac.in,https://library.univ-punjab.ac.in/archives/digitized,0.925,CLOAKED_SEO_SPAM,Academic Ghostwriting Spam,"Bot Gets Academic Essay Service, Users Get 404",0.115,0.1521,False
+10,2026-09-24,treasury.gov,https://www.treasury.gov/resource-center/data-chart,0.031,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+10,2026-09-24,iitd.ac.in,https://www.iitd.ac.in/events/annual-symposium,0.033,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+10,2026-09-24,cybercrime.gov.in,https://cybercrime.gov.in/static/awareness.html,0.0,BENIGN_STATIC,None,Exact Match Across All Profiles,1.0,1.0,False
+10,2026-09-24,municipal.karnataka.gov.in,https://municipal.karnataka.gov.in/notices/tenders,0.0,REMEDIATED,None,Security Maintenance / Remediation (503 Service Unavailable),1.0,1.0,False
+10,2026-09-24,archives.tn.gov.in,https://archives.tn.gov.in/public/gazette-2023,0.835,CLOAKED_SEO_SPAM,Blackhat Casino Link Network,"DOM CSS-Hidden Steganographic Anchor Links (High Visual Sim, Low DOM Sim)",0.7659,0.96,False
+11,2026-09-25,transport.wb.gov.in,https://transport.wb.gov.in/services/permit-status,0.88,CLOAKED_SEO_SPAM,Crypto Recovery Scam,User-Agent Injected Scam Landing (404 vs 200 Crypto),0.0963,0.1567,False
+11,2026-09-25,scholarships.gov.in,https://scholarships.gov.in/portal/scheme-guidelines,0.965,CLOAKED_CONDITIONAL_REDIRECT,Piracy APK & Affiliate Fraud,"Bot Gets Piracy Directory, Mobile User Gets Affiliate Scam Redirect",0.1265,0.1892,True
+11,2026-09-25,health.delhi.gov.in,https://health.delhi.gov.in/reports/bulletin-2024,0.94,CLOAKED_SEO_SPAM,Unlicensed Pharmacy / Rx Spam,"User-Agent Header Cloaking: Pharmacy Spam for Bots, 404 for Users",0.0907,0.1613,False
+11,2026-09-25,agri.up.gov.in,https://agri.up.gov.in/schemes/kisan-subsidy,0.89,CLOAKED_CONDITIONAL_REDIRECT,Telegram Betting Syndicate,Mobile User Conditional Redirect to Telegram Gambling,1.0,1.0,True
+11,2026-09-25,library.univ-punjab.ac.in,https://library.univ-punjab.ac.in/archives/digitized,0.0,REMEDIATED,None,Path Purged by Admin (410 Gone for all),1.0,1.0,False
+11,2026-09-25,treasury.gov,https://www.treasury.gov/resource-center/data-chart,0.038,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+11,2026-09-25,iitd.ac.in,https://www.iitd.ac.in/events/annual-symposium,0.031,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+11,2026-09-25,cybercrime.gov.in,https://cybercrime.gov.in/static/awareness.html,0.0,BENIGN_STATIC,None,Exact Match Across All Profiles,1.0,1.0,False
+11,2026-09-25,municipal.karnataka.gov.in,https://municipal.karnataka.gov.in/notices/tenders,0.0,REMEDIATED,None,Security Maintenance / Remediation (503 Service Unavailable),1.0,1.0,False
+11,2026-09-25,archives.tn.gov.in,https://archives.tn.gov.in/public/gazette-2023,0.835,CLOAKED_SEO_SPAM,Blackhat Casino Link Network,"DOM CSS-Hidden Steganographic Anchor Links (High Visual Sim, Low DOM Sim)",0.7672,0.96,False
+12,2026-09-26,transport.wb.gov.in,https://transport.wb.gov.in/services/permit-status,0.88,CLOAKED_SEO_SPAM,Crypto Recovery Scam,User-Agent Injected Scam Landing (404 vs 200 Crypto),0.1176,0.1422,False
+12,2026-09-26,scholarships.gov.in,https://scholarships.gov.in/portal/scheme-guidelines,0.965,CLOAKED_CONDITIONAL_REDIRECT,Piracy APK & Affiliate Fraud,"Bot Gets Piracy Directory, Mobile User Gets Affiliate Scam Redirect",0.1198,0.1698,True
+12,2026-09-26,health.delhi.gov.in,https://health.delhi.gov.in/reports/bulletin-2024,0.94,CLOAKED_SEO_SPAM,Unlicensed Pharmacy / Rx Spam,"User-Agent Header Cloaking: Pharmacy Spam for Bots, 404 for Users",0.0908,0.1371,False
+12,2026-09-26,agri.up.gov.in,https://agri.up.gov.in/schemes/kisan-subsidy,0.89,CLOAKED_CONDITIONAL_REDIRECT,Telegram Betting Syndicate,Mobile User Conditional Redirect to Telegram Gambling,1.0,1.0,True
+12,2026-09-26,library.univ-punjab.ac.in,https://library.univ-punjab.ac.in/archives/digitized,0.0,REMEDIATED,None,Path Purged by Admin (410 Gone for all),1.0,1.0,False
+12,2026-09-26,treasury.gov,https://www.treasury.gov/resource-center/data-chart,0.034,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+12,2026-09-26,iitd.ac.in,https://www.iitd.ac.in/events/annual-symposium,0.04,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+12,2026-09-26,cybercrime.gov.in,https://cybercrime.gov.in/static/awareness.html,0.0,BENIGN_STATIC,None,Exact Match Across All Profiles,1.0,1.0,False
+12,2026-09-26,municipal.karnataka.gov.in,https://municipal.karnataka.gov.in/notices/tenders,0.0,REMEDIATED,None,Security Maintenance / Remediation (503 Service Unavailable),1.0,1.0,False
+12,2026-09-26,archives.tn.gov.in,https://archives.tn.gov.in/public/gazette-2023,0.835,CLOAKED_SEO_SPAM,Blackhat Casino Link Network,"DOM CSS-Hidden Steganographic Anchor Links (High Visual Sim, Low DOM Sim)",0.768,0.96,False
+13,2026-09-27,transport.wb.gov.in,https://transport.wb.gov.in/services/permit-status,0.88,CLOAKED_SEO_SPAM,Crypto Recovery Scam,User-Agent Injected Scam Landing (404 vs 200 Crypto),0.1113,0.1508,False
+13,2026-09-27,scholarships.gov.in,https://scholarships.gov.in/portal/scheme-guidelines,0.965,CLOAKED_CONDITIONAL_REDIRECT,Piracy APK & Affiliate Fraud,"Bot Gets Piracy Directory, Mobile User Gets Affiliate Scam Redirect",0.1282,0.1801,True
+13,2026-09-27,health.delhi.gov.in,https://health.delhi.gov.in/reports/bulletin-2024,0.94,CLOAKED_SEO_SPAM,Unlicensed Pharmacy / Rx Spam,"User-Agent Header Cloaking: Pharmacy Spam for Bots, 404 for Users",0.0937,0.1503,False
+13,2026-09-27,agri.up.gov.in,https://agri.up.gov.in/schemes/kisan-subsidy,0.01,BENIGN_RESPONSIVE,None,Normal Agriculture Government Portal,1.0,1.0,False
+13,2026-09-27,library.univ-punjab.ac.in,https://library.univ-punjab.ac.in/archives/digitized,0.0,REMEDIATED,None,Path Purged by Admin (410 Gone for all),1.0,1.0,False
+13,2026-09-27,treasury.gov,https://www.treasury.gov/resource-center/data-chart,0.034,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+13,2026-09-27,iitd.ac.in,https://www.iitd.ac.in/events/annual-symposium,0.034,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+13,2026-09-27,cybercrime.gov.in,https://cybercrime.gov.in/static/awareness.html,0.0,BENIGN_STATIC,None,Exact Match Across All Profiles,1.0,1.0,False
+13,2026-09-27,municipal.karnataka.gov.in,https://municipal.karnataka.gov.in/notices/tenders,0.0,REMEDIATED,None,Security Maintenance / Remediation (503 Service Unavailable),1.0,1.0,False
+13,2026-09-27,archives.tn.gov.in,https://archives.tn.gov.in/public/gazette-2023,0.835,CLOAKED_SEO_SPAM,Blackhat Casino Link Network,"DOM CSS-Hidden Steganographic Anchor Links (High Visual Sim, Low DOM Sim)",0.7525,0.96,False
+14,2026-09-28,transport.wb.gov.in,https://transport.wb.gov.in/services/permit-status,0.0,REMEDIATED,None,Access Blocked / Cleaned by WAF Gateway (403),1.0,1.0,False
+14,2026-09-28,scholarships.gov.in,https://scholarships.gov.in/portal/scheme-guidelines,0.965,CLOAKED_CONDITIONAL_REDIRECT,Piracy APK & Affiliate Fraud,"Bot Gets Piracy Directory, Mobile User Gets Affiliate Scam Redirect",0.1114,0.1871,True
+14,2026-09-28,health.delhi.gov.in,https://health.delhi.gov.in/reports/bulletin-2024,0.94,CLOAKED_SEO_SPAM,Unlicensed Pharmacy / Rx Spam,"User-Agent Header Cloaking: Pharmacy Spam for Bots, 404 for Users",0.1136,0.1562,False
+14,2026-09-28,agri.up.gov.in,https://agri.up.gov.in/schemes/kisan-subsidy,0.01,BENIGN_RESPONSIVE,None,Normal Agriculture Government Portal,1.0,1.0,False
+14,2026-09-28,library.univ-punjab.ac.in,https://library.univ-punjab.ac.in/archives/digitized,0.0,REMEDIATED,None,Path Purged by Admin (410 Gone for all),1.0,1.0,False
+14,2026-09-28,treasury.gov,https://www.treasury.gov/resource-center/data-chart,0.034,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+14,2026-09-28,iitd.ac.in,https://www.iitd.ac.in/events/annual-symposium,0.037,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+14,2026-09-28,cybercrime.gov.in,https://cybercrime.gov.in/static/awareness.html,0.0,BENIGN_STATIC,None,Exact Match Across All Profiles,1.0,1.0,False
+14,2026-09-28,municipal.karnataka.gov.in,https://municipal.karnataka.gov.in/notices/tenders,0.0,REMEDIATED,None,Security Maintenance / Remediation (503 Service Unavailable),1.0,1.0,False
+14,2026-09-28,archives.tn.gov.in,https://archives.tn.gov.in/public/gazette-2023,0.835,CLOAKED_SEO_SPAM,Blackhat Casino Link Network,"DOM CSS-Hidden Steganographic Anchor Links (High Visual Sim, Low DOM Sim)",0.7659,0.96,False
+15,2026-09-29,transport.wb.gov.in,https://transport.wb.gov.in/services/permit-status,0.0,REMEDIATED,None,Access Blocked / Cleaned by WAF Gateway (403),1.0,1.0,False
+15,2026-09-29,scholarships.gov.in,https://scholarships.gov.in/portal/scheme-guidelines,0.965,CLOAKED_CONDITIONAL_REDIRECT,Piracy APK & Affiliate Fraud,"Bot Gets Piracy Directory, Mobile User Gets Affiliate Scam Redirect",0.1085,0.179,True
+15,2026-09-29,health.delhi.gov.in,https://health.delhi.gov.in/reports/bulletin-2024,0.94,CLOAKED_SEO_SPAM,Unlicensed Pharmacy / Rx Spam,"User-Agent Header Cloaking: Pharmacy Spam for Bots, 404 for Users",0.0944,0.1398,False
+15,2026-09-29,agri.up.gov.in,https://agri.up.gov.in/schemes/kisan-subsidy,0.01,BENIGN_RESPONSIVE,None,Normal Agriculture Government Portal,1.0,1.0,False
+15,2026-09-29,library.univ-punjab.ac.in,https://library.univ-punjab.ac.in/archives/digitized,0.0,REMEDIATED,None,Path Purged by Admin (410 Gone for all),1.0,1.0,False
+15,2026-09-29,treasury.gov,https://www.treasury.gov/resource-center/data-chart,0.036,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+15,2026-09-29,iitd.ac.in,https://www.iitd.ac.in/events/annual-symposium,0.038,BENIGN_RESPONSIVE,None,Media Query Viewport Layout Shift (Identical Semantic Text),1.0,1.0,False
+15,2026-09-29,cybercrime.gov.in,https://cybercrime.gov.in/static/awareness.html,0.0,BENIGN_STATIC,None,Exact Match Across All Profiles,1.0,1.0,False
+15,2026-09-29,municipal.karnataka.gov.in,https://municipal.karnataka.gov.in/notices/tenders,0.0,REMEDIATED,None,Security Maintenance / Remediation (503 Service Unavailable),1.0,1.0,False
+15,2026-09-29,archives.tn.gov.in,https://archives.tn.gov.in/public/gazette-2023,0.835,CLOAKED_SEO_SPAM,Blackhat Casino Link Network,"DOM CSS-Hidden Steganographic Anchor Links (High Visual Sim, Low DOM Sim)",0.7677,0.96,False

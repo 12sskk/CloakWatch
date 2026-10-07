@@ -1,0 +1,18 @@
+Domain,Start Day,End Day,Duration (Days),Observed State,Active Campaign,Transition Trigger,Notes
+transport.wb.gov.in,1,3,3,DORMANT_404,None,Initial discovery; path returns generic HTTP 404,Attacker payload staging phase
+transport.wb.gov.in,4,8,5,ACTIVE_CLOAKING,Online Casino / Slot88,User-Agent rule injected (.htaccess / Nginx rewrite),High volume keyword spam cloaked for Googlebot
+transport.wb.gov.in,9,13,5,CAMPAIGN_PIVOT,Crypto Asset Recovery Scam,Attacker swapped template dynamically,Pivot from gambling to financial fraud lure
+transport.wb.gov.in,14,15,2,REMEDIATED,None,Government CERT / admin deployed WAF ACL rule (403),Compromise closed after incident alert
+scholarships.gov.in,1,15,15,ACTIVE_PERSISTENT_CLOAKING,Piracy APK & Mobile Affiliate Scam,Dual-vector conditional redirection,Long-term unpatched compromise abusing high trust .gov.in authority
+health.delhi.gov.in,1,15,15,ACTIVE_PERSISTENT_CLOAKING,Unlicensed Pharmacy / Rx Spam,Server-side User-Agent filter,Stealthy pharmaceutical spam campaign; 404 shown to organic visitors
+agri.up.gov.in,1,5,5,BENIGN_BASELINE,None,Normal government department portal,Pre-compromise baseline
+agri.up.gov.in,6,12,7,BURST_MOBILE_INJECTION,Telegram VIP Betting Syndicate,JavaScript injection targeting mobile viewport & touch events,Opportunistic 7-day mobile redirect abuse before attacker script teardown
+agri.up.gov.in,13,15,3,REVERTED_INACTIVE,None,Attacker removed redirect hook,Returned to benign state without formal admin response
+library.univ-punjab.ac.in,1,10,10,ACTIVE_CLOAKING,Academic Ghostwriting Service,PHP backdoor in WordPress upload folder,Targeting high DR academic domain (.ac.in) for essay link schemes
+library.univ-punjab.ac.in,11,15,5,REMEDIATED,None,Sysadmin deleted infected plugin folder (HTTP 410),Permanent removal
+treasury.gov,1,15,15,CONTROL_BENIGN,None,Production responsive CSS layout,Empirical baseline demonstrating low CloakScore under responsive shifts
+iitd.ac.in,1,15,15,CONTROL_BENIGN,None,Institutional website with mobile navigation,Empirical baseline demonstrating zero semantic cloaking
+cybercrime.gov.in,1,15,15,CONTROL_BENIGN,None,Static HTML informational resource,Zero variance sanity check baseline across all days
+municipal.karnataka.gov.in,1,7,7,ACTIVE_CLOAKING,Indonesian Slot88 Maxwin,Injected reverse proxy gateway,Active SEO poisoning abusing public tender indexing
+municipal.karnataka.gov.in,8,15,8,REMEDIATED,None,Website placed in 503 maintenance mode by emergency response,Site taken offline for remediation
+archives.tn.gov.in,1,15,15,STEGANOGRAPHIC_CLOAKING,Blackhat Casino Link Farm,CSS hidden opacity:0 anchor tags,Stealth cloaking designed to defeat visual inspection scanners
