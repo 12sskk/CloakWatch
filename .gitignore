@@ -5,3 +5,4 @@ validate_data_run1/
 validate_data_run2/
 test_server/test_server_log.jsonl
 crawler/data/
+*.xlsx

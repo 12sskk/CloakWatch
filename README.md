@@ -58,6 +58,23 @@ This repository includes a controlled test environment (Phase 1) and a minimal m
    .\venv\Scripts\playwright.exe install chromium
    ```
 
+## Interactive Web Application (Batch Scan & Excel Export)
+
+You can launch the full interactive web application to input multiple URLs, execute live multi-profile scanning, view real-time threat scorecards, and export results directly to an Excel (`.xlsx`) report:
+
+```bash
+.\venv\Scripts\python.exe run_app.py
+```
+Open **`http://127.0.0.1:5000`** in your browser.
+
+Features:
+- **Batch URL Scanning:** Paste multiple URLs (one per line).
+- **Multi-Persona Probing:** Tests each URL across Desktop User, Mobile User, Googlebot Desktop, and Googlebot Mobile.
+- **Scorecard Modal:** View the 5-parameter CloakScore breakdown ($S_{sem}, S_{route}, S_{payload}, S_{vis}, S_{trans}$).
+- **Excel Report Generator:** Export a multi-tab formatted spreadsheet (`Executive Summary`, `Threat Assessments`, `Differential Analysis`, `Raw Probe Telemetry`).
+
+---
+
 ## Phase 1: Test Server
 
 The test server simulates various cloaking and personalization scenarios.
@@ -83,8 +100,8 @@ The crawler runs deterministic capture across multiple profiles to detect cloaki
 Run the validation script to test the crawler against the local test server (ensure the test server is running in a separate terminal first):
 
 ```bash
-cd crawler
-..\venv\Scripts\python.exe validate.py
+        cd crawler
+        ..\venv\Scripts\python.exe validate.py
 ```
 
 The validation script will:
