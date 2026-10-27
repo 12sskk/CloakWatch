@@ -53,7 +53,7 @@ def scan():
 def export_excel():
     if not LATEST_SCAN["results"]:
         # Fallback to loading sample from study database if user directly hits export
-        from web_app.scanner import analyze_urls, SAMPLE_GOV_URLS if 'SAMPLE_GOV_URLS' in dir() else []
+        from web_app.scanner import analyze_urls
         default_samples = [
             "https://employment.ap.gov.in/online-fitgirl-repack-apk-11219t52.html",
             "https://urjapay.andamannicobar.gov.in/aviator/yes-spin-game-login-download-and-mobile-access-on-android/",
