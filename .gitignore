@@ -6,3 +6,5 @@ validate_data_run2/
 test_server/test_server_log.jsonl
 crawler/data/
 *.xlsx
+*.bat
+*.cmd
